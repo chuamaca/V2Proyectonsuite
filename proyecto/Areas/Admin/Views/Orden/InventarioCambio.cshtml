@@ -1,0 +1,616 @@
+﻿
+
+@model Model.DetalleOrden
+@{
+    List<Model.Hardware> miinventario = ViewBag.Inventarios;
+    List<Model.DetalleOrden> miinventarioelegido = ViewBag.InventarioElegido;
+
+   
+}
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+                      url: '@Url.Content("~/admin/orden/nombreempresa/?miid_orden=")' + $("#Orden_Id").val(),
+                      data: '',
+                      datatype:'json',
+                      type: "GET",
+                      success: function (msg) {
+
+                          var nempresa = msg[0].empresaorden;
+                          $.ajax({
+                              url: '@Url.Content("~/admin/orden/buscartipohardware/?empresa=")' + nempresa,
+                              data: '',
+                              datatype: 'json',
+                              type: "GET",
+                              success: function (rpt) {
+
+                                  console.log(rpt);
+                              },
+                              error: function (result) {
+                                  alert("ERROR " + result.status + ' ' + result.statusText);
+                              }
+                          });
+
+                                                },
+                      error: function (result) {
+                          alert("ERROR " + result.status + ' ' + result.statusText);
+                      }
+                  });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+
+
+        $("#hardwareselect").change(function () {
+            $("#busquedahw").empty();
+            //DESARROLLO
+            $.getJSON('/orden/GetHardwareDetail', { idhardware: $('#hardwareselect').val() }, function (data) {
+
+                // PRODUCCION:  $.getJSON('../GetHardwareDetail', { idhardware: $('#hardwareselect').val() }, function (data) {
+                $.each(data, function () {
+
+                    ////https://thisinterestsme.com/fix-unexpected-token-o-in-json/
+                    var stringified = JSON.stringify(data);
+                    var detail = JSON.parse(stringified);
+
+                    ////https://josehernandez.es/2010/10/02/uso-json-javascript.html
+
+                    for (var i = 0; i < detail.length; i++) {
+                        $("#busquedahw").val('Detalle: ' + detail[i].seriehw +
+                            '; ' + detail[i].nmmodel +
+                            '; ' + detail[i].nmprocessor +
+                            '; ' + detail[i].mcapacity +
+                            '; ' + detail[i].capacitystorage +
+                            '; ' + detail[i].nmequipo);
+
+
+                        $("#codigontb").val(detail[i].codigontb);
+                        $("#typedevice").val(detail[i].typedevice);
+                        $("#seriehw").val(detail[i].seriehw);
+                        $("#nmbrand").val(detail[i].nmbrand);
+                        $("#nmmodel").val(detail[i].nmmodel);
+                        $("#partnumberhw").val(detail[i].partnumberhw);
+                        $("#snbatery").val(detail[i].snbatery);
+                        $("#sncharger").val(detail[i].sncharger);
+
+                        $("#nmprocessor").val(detail[i].nmprocessor);
+                        $("#ghzprocessor").val(detail[i].ghzprocessor);
+                        $("#mcapacity").val(detail[i].mcapacity);
+                        $("#capacitystorage").val(detail[i].capacitystorage);
+                        $("#lic").val(detail[i].lic);
+                        $("#nmequipo").val(detail[i].nmequipo);
+
+                        /*
+                         ' Modelo: ' + detail[i].nmmodel +
+                            ' Procesador' + detail[i].nmprocessor +
+                            ' Memoria' + detail[i].mcapacity +
+                            ' Storage' + detail[i].capacitystorage +
+                            ' Hostname' + detail[i].nmequipo );
+
+
+                        */
+                    }
+                });
+            });
+        });
+
+        var array_tel = "";
+
+        $.getJSON('/orden/getUsuarioFinal/' + $("#Orden_Id").val(), function (data) {
+            //PRODUCCION
+            // console.log('holas')
+            //    $.getJSON('../default/GetRPT_Hardware_produccion', function (data) {
+            let usuarios = data[0]['equipousuarioorden'];
+            let telefono = data[0]['telefonousuarioorden'];
+
+            let array_usuarios = usuarios.split("-")
+            let myArrClean_usuario = array_usuarios.filter(Boolean) //quito el ultimo elemento si es vacio
+
+            let array_telefono = telefono.split("-")
+            var myArrClean_telefono = array_telefono.filter(Boolean) //quito el ultimo elemento si es vacio
+            array_tel = myArrClean_telefono;
+            let usuario = "";
+            let  i=0
+            myArrClean_usuario.forEach(
+               element=>usuario += '<option class="clickaqui" data-orden="' + i++ + '" value="' + element + '">' + element + '</option>'              )
+            $("#combo_usuarios").html(usuario);
+
+
+
+
+           // let quitar_ultimo = array.pop();
+           // console.log(myArrClean);
+        });
+
+        $("#combo_usuarios").on('click', function (e) {
+            const opcion = e.target.classList.contains('clickaqui');
+            if (opcion) {
+                let index = e.target.dataset.orden
+
+                $("#telefono_usuario").val(array_tel[index])
+                console.log(array_tel[index])
+
+            }
+        })
+
+
+    });
+
+</script>
+
+
+<script>
+    //window.onload = function () {
+    //    var fecha = new Date(); //Fecha actual
+    //    var mes = fecha.getMonth() + 1; //obteniendo mes
+    //    var dia = fecha.getDate(); //obteniendo dia
+    //    var ano = fecha.getFullYear(); //obteniendo año
+    //    if (dia < 10)
+    //        dia = '0' + dia; //agrega cero si el menor de 10
+    //    if (mes < 10)
+    //        mes = '0' + mes //agrega cero si el menor de 10
+
+    //    document.getElementById('fregistro').value = dia + "/" + mes + "/" + ano;
+    //}
+
+
+
+</script>
+
+<script>
+
+
+    //window.onload = function () {
+    //    //  var showData = $('#show-data');
+    //   console.log('hola')
+    //    let id_mi_orden = 16;
+
+    //  //  $.getJSON('/orden/getUsuarioFinal', { idorden: $('#Orden_Id').val() }, function (data) {
+    //    //DESARROLLO
+    //    $.getJSON('/orden/getUsuarioFinal' + $("#Orden_Id").val(), function (data) {
+    //        //PRODUCCION
+    //    //    $.getJSON('../default/GetRPT_Hardware_produccion', function (data) {
+    //        console.log(data);
+    //        /*$.each(data, function () {
+
+    //            var stringified = JSON.stringify(data);
+    //            var detail = JSON.parse(stringified);
+
+    //            console.log(detail);
+
+    //            for (var i = 0; i < detail.length; i++) {
+
+    //                console.log(detail[i]);
+
+    //            }
+
+    //        });*/
+
+    //    });
+    //}
+
+</script>
+
+
+@if (miinventario.Count > 0)
+{
+    using (Html.BeginForm("GuardarInventarioo", "Orden", FormMethod.Post, new { id = "frm-inventario" }))
+    {
+        @Html.HiddenFor(x => x.Orden_Id)
+        @Html.TextBoxFor(x => x.Orden_Id, new { @class = "input-12 " })
+
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @*//PARA REALIZAR UNA BUSQUEDA*@
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="col-xs-12 text-center">
+                            <i class="fa fa-desktop fa-2x"></i>
+                        </div>
+                        <div class="huge text-center">EQUIPOS DISPONIBLES EN ALMACEN</div>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="collapsed-box input-12" name="Hardware_Id" id="hardwareselect">
+                            <option value="0" class="text-red">  SELECCIONE UN EQUIPO   </option>
+                            @foreach (var c in miinventario)
+                            {
+
+                                <option value="@c.idhw">@c.codigontb - @c.seriehw</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="busquedahw" class="input-12" value="" placeholder="" />
+                        <br />
+                        <a id="navbar-search-input" href="http://soportenetcorporate.ddns.net/nsuite/xadm/active-view?edit= + ">Editar</a>
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#MODALHARDWAREDETAIL">
+                            <span class="fa fa fa-plus-square"></span>  GENERAR GUIA REMISION
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+
+
+
+
+        <div class="row">
+
+            @Html.TextBoxFor(x => x.fregistro, new { @class = "input-12 datepicker", @type = "hidden" })
+
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.seriedt, new { @class = "col-sm-2 control-label pull-left" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.seriedt, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.seriedt, null, new { @class = "label label-danger" })
+                </div>
+                @Html.LabelFor(x => x.usuariof, new { @class = "col-sm-1 control-label pull-left" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.usuariof, new { @class = "input-12", id = "telefono_usuario" })
+                    @Html.ValidationMessageFor(x => x.usuariof, null, new { @class = "label label-danger" })
+                   
+                </div>
+
+
+
+                @Html.LabelFor(x => x.telefonof, new { @class = "col-sm-1 control-label pull-left" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(x => x.telefonof, new { @class = "input-12", id = "telefono_usuario" })
+                    @Html.ValidationMessageFor(x => x.telefonof, null, new { @class = "label label-danger" })
+                </div>
+
+
+              
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div class="row">
+            @Html.LabelFor(x => x.ubicacion, new { @class = "col-sm-2 control-label pull-left" })
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.ubicacion, new { @class = "input-12", id = "aquii" })
+                @Html.ValidationMessageFor(x => x.ubicacion, null, new { @class = "label label-danger" })
+            </div>
+
+            @Html.LabelFor(x => x.estadodetalleorden, new { @class = "col-sm-1 control-label pull-left" })
+            <div class="col-md-2">
+                <select id="estadodetalleorden" name="estadodetalleorden" class="input-12">
+                    @if (Model.estadodetalleorden == 1)
+                    {
+                        <option value="1">PRODUCCION</option>
+                        <option value="0">CERRADO</option>
+                    }
+                    else if (Model.estadodetalleorden == 0)
+                    {
+                        <option value="1">PRODUCCION</option>
+                        <option value="0">CERRADO</option>
+                    }
+                </select>
+            </div>
+
+            @*<div class="col-md-3">
+
+                    @Html.TextBoxFor(x => x.estadodetalleorden, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.estadodetalleorden, null, new { @class = "label label-danger" })
+                </div>*@
+            <div>
+                <label class="col-sm-2 control-label pull-left"> ACCESORIOS</label>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#MODALACCESORIOS">
+                        <span class="fa fa fa-plus-square"></span>  AGREGAR
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(x => x.obscambio, new { @class = "col-sm-2 control-label pull-left" })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(x => x.obscambio, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.obscambio, null, new { @class = "label label-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(x => x.sefacturo, new { @class = "col-sm-2 control-label pull-left" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.sefacturo, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.sefacturo, null, new { @class = "label label-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(x => x.tipohardwareestado, new { @class = "col-sm-2 control-label pull-left" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.tipohardwareestado, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.tipohardwareestado, null, new { @class = "label label-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(x => x.descripciontipohardwareestado, new { @class = "col-sm-2 control-label pull-left" })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(x => x.descripciontipohardwareestado, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.descripciontipohardwareestado, null, new { @class = "label label-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(x => x.identificador, new { @class = "col-sm-2 control-label pull-left" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.identificador, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.identificador, null, new { @class = "label label-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(x => x.moneda, new { @class = "col-sm-2 control-label pull-left" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(x => x.moneda, new { @class = "input-12" })
+                    @Html.ValidationMessageFor(x => x.moneda, null, new { @class = "label label-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <hr />
+
+        <div class="panel panel-box-success">
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.valor, new { @class = "col-sm-1 control-label pull-left" })
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(x => x.valor, new { @class = "input-12" })
+                        @Html.ValidationMessageFor(x => x.valor, null, new { @class = "label label-danger" })
+                    </div>
+                    @Html.LabelFor(x => x.IGV, new { @class = "col-sm-1 control-label pull-left" })
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(x => x.IGV, new { @class = "input-12", disabled = "disabled" })
+                        @Html.ValidationMessageFor(x => x.IGV, null, new { @class = "label label-danger" })
+                    </div>
+                    @Html.LabelFor(x => x.total, new { @class = "col-sm-1 control-label pull-left" })
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(x => x.total, new { @class = "input-12", disabled = "disabled" })
+                        @Html.ValidationMessageFor(x => x.total, null, new { @class = "label label-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        //MODAL PARA ACCESORIOS
+
+        <div class="modal fade" id="MODALACCESORIOS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">ACCESORIOS AGREGADOS </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.cableseg, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.cableseg, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.cableseg, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.mouse, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.mouse, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.mouse, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.maleta, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.maleta, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.maleta, null, new { @class = "label label-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.accesorio, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.accesorio, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.accesorio, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="MODALHARDWAREDETAIL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">DETALLE DE EQUIPO A AGREGAR </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.codigontb, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.codigontb, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.codigontb, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.typedevice, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.typedevice, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.typedevice, null, new { @class = "label label-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.seriehw, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.seriehw, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.seriehw, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.nmbrand, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.nmbrand, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.nmbrand, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.nmmodel, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.nmmodel, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.nmmodel, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.partnumberhw, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.partnumberhw, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.partnumberhw, null, new { @class = "label label-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.snbatery, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.snbatery, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.snbatery, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.sncharger, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.sncharger, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.sncharger, null, new { @class = "label label-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.nmprocessor, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.nmprocessor, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.nmprocessor, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ghzprocessor, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.ghzprocessor, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.ghzprocessor, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.mcapacity, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.mcapacity, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.mcapacity, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.capacitystorage, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.capacitystorage, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.capacitystorage, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.lic, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.lic, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.lic, null, new { @class = "label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.nmequipo, new { @class = "col-sm-6 control-label pull-left" })
+                            @Html.TextBoxFor(x => x.nmequipo, new { @class = "input-12", placeholder = "" })
+                            @Html.ValidationMessageFor(x => x.nmequipo, null, new { @class = "label label-danger" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        //EVALUA SI ESTA SEGURO DE AGREGAR DICHO EQUIPO
+        <script>
+
+            $(document).ready(function () {
+                $("#chkdwn2").click(function () {
+                    if ($(this).is(":checked")) {
+                        $("#addhw").prop("disabled", false);
+                    } else {
+                        $("#addhw").prop("disabled", true);
+                    }
+                });
+            });
+
+        </script>
+
+        <div class="text-right">
+            <label class="checkbox-inline text-red"><input class="icheck" type="checkbox" id="chkdwn2" value="feedback" /> <strong>  ACEPTAS  AGREGAR ! </strong>  </label>
+            <br />
+            <button id="addhw" data-ajax="true" data-confirm="¿Esta seguro de asignar este equipo a la orden?" type="submit" class="btn btn-primary btn-sm" disabled>Agregar Alquiler</button>
+        </div>
+
+
+    }
+
+}
+<hr />
+@*
+
+    ES EL RESULTADO GUARDADO DEL DETALLE ORDEN (EQUIPOS AGREGADOS.)
+*@
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Detalle de Equipos en Alquiler</div>
+    <div class="panel-body">
+        <ul class="dl-horizontal">
+
+            @foreach (var c in miinventarioelegido)
+            {
+                <li class="list-group-item">
+                    @c.Hardware.codigontb - @c.Hardware.seriehw - @c.Hardware.nmequipo
+                    <span class="pull-right">
+
+                        <a href="~/Admin/DetalleOrdens/Edit/@c.iddetalleorden"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <span class="fa fa-edit fa-2x"></span>          </a>
+                    </span>
+                    @if (c.estadodetalleorden == 1)
+                    {
+                        <span class="pull-right"> @c.seriedt | @c.usuariof | @c.valor) </span>
+
+                    }
+                    else if (c.estadodetalleorden == 0)
+                    {
+                        <span class="pull-right text-danger"> @c.seriedt | @c.usuariof | @c.valor) - CERRADO </span>
+
+                    }
+                    else if (c.estadodetalleorden == 2)
+                    {
+                        <span class="pull-right label-danger"> @c.seriedt | @c.usuariof | @c.valor) - CAMBIO </span>
+
+                    }
+
+                </li>
+
+            }
+        </ul>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse("#frm-inventario");
+    })
+</script>

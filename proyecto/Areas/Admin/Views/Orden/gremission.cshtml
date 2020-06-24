@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Guia De Remisión";
+}
+
+
+
+<div class="uk-container uk-container-center" id="epn_container">
+    <div class="menu__top">
+        <ul id="my-id" class="uk-switcher">
+            <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">
+                <div class="uk-btn-group">
+
+
+                    <a href="~/admin/orden/crud" id="btn_guardar">
+
+                        <i class="uk-icon-large uk-icon-file-o">
+                        </i><br>Nuevo
+                    </a>
+
+                    <a href="~/admin/orden/index" id="btn_guardar">
+                        <i class="uk-icon-large uk-icon-ban">
+                        </i><br>Cancelar
+                    </a>
+
+                    <a href="~/admin/orden/index" data-toggle="modal" data-target="#ModalFacturas">
+                        <i class="uk-icon-large uk-icon-list-ul">
+                        </i><br>
+                        Listado
+                    </a>
+
+                    <a href="#" id="btn_imprimir">
+                        <i class="uk-icon-large uk-icon-print">
+                        </i><br>Imprimir
+                    </a>
+                </div>
+            </li>
+            <li aria-hidden="true" class="" style="animation-duration: 200ms;">
+                <div class="uk-btn-group">
+                    <a href="#" id="btn_imprimir_pos">
+                        <i class="uk-icon-large uk-icon-print">
+                        </i><br>
+                        POS
+                    </a>
+                    <a href="#" id="btn_imprimir_media_carta">
+                        <i class="uk-icon-large uk-icon-print">
+                        </i><br>
+                        Med. Cart
+                    </a>
+                    <a href="#" id="btn_imprimir_carta">
+                        <i class="uk-icon-large uk-icon-print">
+                        </i><br>
+                        Carta
+                    </a>
+                </div>
+            </li>
+            <li aria-hidden="true" class="" style="animation-duration: 200ms;">
+                <div class="uk-btn-group">
+                    <a href="#" id="btn_resumen">
+                        <i class="uk-icon-large uk-icon-bar-chart">
+                        </i><br>
+                        Resumen
+                    </a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+
+
+
+
+
+@*<link href="~/Areas/Admin/Assets/css/iframe.css" rel="stylesheet" />*@
+
+
+
+<script>
+
+
+
+    window.onload = function () {
+
+
+
+        let params = new URLSearchParams(location.search);
+        var contract = params.get('idorden');
+
+        //var link = "../Areas/Admin/formatos/fose.aspx?idorden=1";
+        var iframe = document.createElement('iframe');
+        iframe.frameBorder = 3;
+        iframe.width = "100%";
+        iframe.height = "600px";
+        iframe.id = "randomid";
+        //iframe.setAttribute("src", "http://localhost:54520/Areas/Admin/formatos/fose.aspx?idorden=" + contract);
+
+       // iframe.setAttribute("src", "/Areas/Admin/formatos/crgremision.aspx?idorden=" + contract);
+        iframe.setAttribute("src", "/rentt/Areas/Admin/formatos/crgremision.aspx?idorden=" + contract);
+        //iframe.setAttribute("src", "/rt/Areas/Admin/formatos/crgremision.aspx?idorden=" + contract);
+        document.getElementById("ad55").appendChild(iframe);
+
+
+
+        //var link = "http://www.quirksmode.org/iframetest2.html"
+        //var iframe = document.createElement('iframe');
+        //iframe.frameBorder = 0;
+        //iframe.width = "300px";
+        //iframe.height = "250px";
+        //iframe.id = "randomid";
+        //iframe.setAttribute("src", link);
+        //document.getElementById("ad54").appendChild(iframe);
+
+    }
+</script>
+
+
+
+
+
+
+
+<div class="well iframe" id="ad55">  </div>
+
+
+

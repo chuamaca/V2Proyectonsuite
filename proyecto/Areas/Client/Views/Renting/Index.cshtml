@@ -1,0 +1,439 @@
+﻿@{
+
+    ViewBag.Title = "Listado de Procesos";
+}
+<script>
+
+
+    window.onload = function () {
+        var showData = $('#show-data');
+        //DESARROLLO
+      //  $.getJSON('/renting/GetRPT_Hardware_produccion_empresa', function (data) {
+
+       // '@Url.Content("~/admin/orden/ver_guia_recepcion/")'
+        //PRODUCCION
+        $.getJSON('@Url.Content("~/renting/GetRPT_Hardware_produccion_empresa")', function (data) {
+      //      $.getJSON('../renting/GetRPT_Hardware_produccion_empresa', function (data) {
+
+
+            $.each(data, function () {
+
+                var stringified = JSON.stringify(data);
+                var detail = JSON.parse(stringified);
+
+                //console.log(detail);
+
+                for (var i = 0; i < detail.length; i++) {
+
+                    $("#idprod").val(detail[i].hardwareprodempresa);
+                    $("#sinatencion").val(detail[i].sinatencionempresa);
+                    $("#idclose").val(detail[i].hardwarecloseempresa);
+                    $("#idcambio").val(detail[i].hardwarecambioempresa);
+
+
+
+                }
+
+            });
+
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#listorden").anexGrid({
+            columnas: [
+                 { leyenda: 'ORDEN', columna: 'codigoorden', ordenable: true },
+                { leyenda: 'EMPRESA', columna: 'empresaorden', ordenable: true },
+                { leyenda: 'CLIENTE', columna: 'clienteorden', style: 'width:10px;', ordenable: true },
+                { leyenda: 'OS', columna: 'ordenservicio', style: 'width:140px;', ordenable: true },
+                { leyenda: 'PRODUCCION', columna: 'produccion', style: 'width:140px;', ordenable: true },
+                  { leyenda: 'ESTADO', columna: 'estadoorden', style: 'width:140px;', ordenable: true },
+                { style: 'width:10px;' },
+                { style: 'width:10px;' }
+            ],
+
+            modelo: [
+
+                {
+                    propiedad: 'codigoorden', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/client/renting/viewdetailorden/")' + obj.idorden,
+                            contenido: valor
+                        });
+                    }
+                },
+
+                {
+                    propiedad: 'empresaorden', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/client/renting/viewdetailorden/")' + obj.idorden,
+                            contenido: valor
+                        });
+                    }
+                },
+
+
+
+
+               { propiedad: 'clienteorden' },
+
+
+                { propiedad: 'ordenservicio' },
+                { propiedad: 'produccion' },
+
+                   { propiedad: 'estadoorden' }@*,
+
+
+
+
+                // BOTONES
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/renting/ViewDetailorden/")' + obj.idorden,
+                            contenido: 'DETALLE',
+                            class: 'btn btn-success btn-xs'
+                        });
+                    },
+                }*@
+
+            ],
+
+            url: '@Url.Content("~/renting/ListarOrdenPorEmpresa")',
+            paginable: true,
+            limite: [20, 60, 100],
+            columna: 'idorden',
+            columna_orden: 'DESC'
+        });
+    })
+</script>
+
+
+<div class="well dark">
+    <div class="container-fluid active">
+
+        <div class="row">
+            <div class="col-md-3">
+
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"> <span class="text-bold text-xs"> RESUMEN DE ALQUILERES</span></h4>
+                    </div>
+
+                    <div class="box-body no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="uk-alert-warning active">
+                                <a href="#"><i class="fa uk-slideshow-fade-in"></i> En Producción <input id="idprod" type="text" class="input-12 text-bold text-center" disabled />   </a>
+                            </li>
+                            <li class="uk-alert-warning">
+                                <a href="#"><i class="fa uk-slideshow-fade-in"></i> Solicitud en Proceso <input id="sinatencion" type="text" class="input-12 text-bold text-center" disabled />   </a>
+                            </li>
+
+                            <li class="uk-alert-warning">
+                                <a href="#"><i class="fa uk-slideshow-fade-in"></i> Cerrados <input id="idclose" type="text" class="input-12 text-bold text-center" disabled />   </a>
+                            </li>
+                            <li class="uk-alert-warning">
+                                <a href="#"><i class="fa uk-slideshow-fade-in"></i> Cambios <input id="idcambio" type="text" class="input-12 text-bold text-center" disabled />   </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                @*<div class="box box-solid">
+
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Labels</h3>
+
+                            <div class="box-tools">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="box-body no-padding">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#"><i class="fa fa-circle-o text-red"></i> Important</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Promotions</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Social</a></li>
+                            </ul>
+                        </div>
+
+                    </div>*@
+            </div>
+            <div class="col-md-9">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        @*<H5 class="box-title text-sm">CALENDARIO DE ENTREGAS</H5>*@
+                        @*<div class="box-tools pull-right">
+                                <div class="has-feedback">
+                                    <input type="text" class="form-control input-sm" placeholder="">
+                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                </div>
+                            </div>*@
+                    </div>
+                    <div class="box-body no-padding">
+                        <div class="table-responsive mailbox-messages">
+
+                            <div id="listorden" class="">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<link href="~/dist/fonts/material-design-iconic-font/css/material-design-iconic-font.css" rel="stylesheet" />
+
+    <link href="~/dist/css/style.css" rel="stylesheet" />
+
+
+    <div class="well">
+        <div id="yo" class="page">
+
+
+            <div class="well" id="wizard">
+
+                <h4></h4>
+                <section>
+                    <h3>User profile</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Full Name
+                            </label>
+                            <div class="form-holder">
+
+                                <input type="text" class="input-12">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Education Level
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-edit"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Email ID
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-email"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Phone Number
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-smartphone-android"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Specialization
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-spellcheck"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Date of Birth
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-calendar"></i>
+                                <input type="text" class="form-control datepicker-here" data-language='en' data-date-format="dd - mm - yyyy" id="dp1">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 2 -->
+                <h4></h4>
+                <section>
+                    <h3>Residential address</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Country
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-account-o"></i>
+                                <select name="" id="" class="form-control">
+                                    <option value="united states" class="option">United States</option>
+                                    <option value="united kingdom" class="option">United Kingdom</option>
+                                    <option value="viet nam" class="option">Viet Nam</option>
+                                </select>
+                                <i class="zmdi zmdi-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Street Address
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-pin"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Apartment
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-home"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Town / City
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-pin-drop"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                County
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-pin"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Postcode / Zip
+                            </label>
+                            <div class="form-holder password">
+                                <i class="zmdi zmdi-eye"></i>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 3 -->
+                <h4></h4>
+                <section>
+                    <h3 style="margin-bottom: 37px;">What are you doing?</h3>
+                    <div class="grid">
+                        <div class="grid-item active">
+                            <div class="thumb">
+                                <img src="images/programming.jpg" alt="">
+                            </div>
+                            <div class="heading">
+                                Programming
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="thumb">
+                                <img src="images/sports.jpg" alt="">
+                            </div>
+                            <div class="heading">
+                                Sports
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="thumb">
+                                <img src="images/business.jpg" alt="">
+                            </div>
+                            <div class="heading">
+                                Business
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="thumb">
+                                <img src="images/tour-guide.jpg" alt="">
+                            </div>
+                            <div class="heading">
+                                Tour Guide
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="thumb">
+                                <img src="images/art-design.jpg" alt="">
+                            </div>
+                            <div class="heading">
+                                Art-Design
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="thumb">
+                                <img src="images/doctor.jpg" alt="">
+                            </div>
+                            <div class="heading">
+                                Doctor
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+            <script src="~/dist/js/jquery.steps.js"></script>
+
+
+            <script src="~/dist/js/main.js"></script>*@

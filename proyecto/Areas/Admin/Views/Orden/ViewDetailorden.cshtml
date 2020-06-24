@@ -1,0 +1,133 @@
+﻿@model Model.Orden
+@{
+    ViewBag.Title = "Detalle de Proceso";
+    List<Model.DetalleOrden> miinventarioelegido = ViewBag.InventarioElegido;
+}
+
+
+
+<ol class="breadcrumb">
+    <li><a href="~/admin/orden/index" class="no-print">Orden</a></li>
+    <li class="active"> @(Model.empresaorden + " - " + Model.clienteorden) </li>
+</ol>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Información Orden</div>
+
+    <div class="uk-description-list-horizontal">
+
+        <div class="row">
+            <div class="col-md-5">
+
+                <dl class="dl-horizontal">
+                    <dt>Proceso:</dt>
+                    <dd>@Model.codigoorden</dd>
+                    <dt>Empresa:</dt>
+                    <dd>@Model.empresaorden</dd>
+                    <dt>Cliente:</dt>
+                    <dd>@Model.clienteorden</dd>
+                    <dt>Sucursal:</dt>
+                    <dd>@Model.sucursalorden </dd>
+                    <dt>Contrato Interno:</dt>
+                    <dd>@Model.contratointernoorden</dd>
+                    <dt>Refacturable:</dt>
+                    <dd>@Model.refacturableorden</dd>
+                </dl>
+            </div>
+            <div class="col-md-5">
+                <dl class="dl-horizontal">
+                    <dt>F. Solicitud:</dt>
+                    <dd>@Model.fsolicitudorden</dd>
+                    <dt>Responsable:</dt>
+                    <dd>@Model.responsableorden</dd>
+                    <dt>Telefono:</dt>
+                    <dd>@Model.telefonoresponsableorden</dd>
+
+                    <dt>Hardware:</dt>
+                    <dd>@Model.hardwaredevice</dd>
+                    <dt>Cantidad:</dt>
+                    <dd>@Model.cantidadhardware </dd>
+                    <dt>Tipo:</dt>
+                    <dd>@Model.tipohardware</dd>
+                </dl>
+            </div>
+      
+        </div>
+        <hr />
+
+
+        <div class="row">
+            @*<div class="dl-horizontal">
+
+                <dl>
+
+                    <dt>Serie:</dt>
+                    <dt>Equipo Asignado:</dt>
+                </dl>
+                
+
+            </div>*@
+            <div class="dl-horizontal">
+                @foreach (var c in miinventarioelegido)
+                {
+
+                    
+             
+
+
+                    <dl class="dl-horizontal control-sidebar-dark">
+                        
+                        <dt>Guia de Remisión :</dt>
+                        <dd>@c.gremision</dd>
+
+                    
+
+                         <dt>Hardware :</dt>
+                         <dd>
+                            @c.codigontb - @c.seriehw - @c.nmmodel - @c.nmprocessor - @c.mcapacity - @c.capacitystorage - @c.nmequipo  
+                        
+                            &nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;
+                            <span class="no-print" >
+                                <a href="~/Admin/DetalleOrdens/Edit/@c.iddetalleorden" class="no-print">   <span class="fa fa-edit fa-2x"></span>          </a>
+
+                            </span>
+                        
+                         </dd> 
+                        <dt>Contacto:</dt>
+                        <dd>@c.usuariof   <strong>    &nbsp;&nbsp;&nbsp;   Telefono: </strong>@c.telefonof <strong>     &nbsp;&nbsp;&nbsp;   Ubicación: </strong>@c.ubicacion</dd> 
+
+                        <dt>Precio Alquiler:</dt>
+                        <dd>S/. @c.valor</dd>
+                        <dt>Estado</dt>
+
+                        @if (c.estadodetalleorden == 1)
+                        {
+                            <dd> <span class="alert-success"> PRODUCCION </span> </dd>
+                        }
+                        else if(c.estadodetalleorden==0 )
+                        {
+                            <dd> <span class="alert-error"> CERRADO </span> </dd>
+                        }
+
+                        else if (c.estadodetalleorden == 2)
+                        {
+                            <dd> <span class="alert-warning"> CAMBIO </span> </dd>
+                        }
+
+                        <dt>Guia de Recepción :</dt>
+                        <dd>@c.grecepcion</dd>
+
+                  
+
+
+                    </dl>
+
+                }
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

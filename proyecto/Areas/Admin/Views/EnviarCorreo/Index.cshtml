@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("enviarCorreo", "Orden", FormMethod.Post))
+{
+
+    <button>Envgsiar</button>
+    <input type="submit" data-ajax="true" value="enviar" />
+}

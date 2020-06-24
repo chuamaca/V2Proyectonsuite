@@ -1,0 +1,33 @@
+﻿
+
+@{
+    ViewBag.Title = "Fose";
+}
+
+<h2>Fose</h2>
+<div>
+    <button >Enviar por correo</button>
+
+</div>
+<div id="aqui">
+
+</div>
+
+<script>
+    window.onload = function () {
+        let params = new URLSearchParams(location.search);
+        var contract = params.get('idorden');
+
+        console.log("http://localhost:54520/proyecto/report/fose" + contract + ".pdf")
+
+        var link = "../Areas/Admin/formatos/fose.aspx?idorden=1";
+        var iframe = document.createElement('iframe');
+        iframe.frameBorder = 3;
+        iframe.width = "100%";
+        iframe.height = "600px";
+        iframe.id = "randomid";
+     
+        iframe.setAttribute("src", "http://192.168.0.9/rt/reports/fose/fose" + contract + ".pdf");
+        document.getElementById("aqui").appendChild(iframe);
+    }
+</script>

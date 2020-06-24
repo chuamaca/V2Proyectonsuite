@@ -1,0 +1,217 @@
+﻿@{
+    Layout = null;
+    string controlador = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+
+   Model.Usuario usuario = new Model.Usuario().ObtenerPerfil(Helper.SessionHelper.GetUser());
+}
+<!DOCTYPE html>
+<html lang="es-pe">
+<head>
+    <title>@ViewBag.Title  | Nsuite</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link href="~/Areas/Admin/Assets/css/admin-style.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Assets/css/bootstrap.theme.min.css" rel="stylesheet" />
+
+    <link href="~/Areas/Admin/Assets/js/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Assets/css/AdminLTE.css" rel="stylesheet" />
+
+    <link href="~/Areas/Admin/Assets/css/uikit.css" rel="stylesheet" />
+ 
+    <link href="~/Areas/Admin/Assets/css/site.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Assets/css/Mgrid.css" rel="stylesheet" />
+
+
+
+    <link href="~/Areas/Admin/Assets/css/formulario.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="~/Areas/Admin/Assets/js/jquery.js"></script>
+
+    @*<script src="~/Areas/Admin/Assets/js/jquery-3.4.1.min.js"></script>*@
+    <style>
+        .swal2-popup{
+            font-size:1.8rem !important;
+        }
+    </style>
+
+
+
+</head>
+<body>
+
+    @if (controlador != "login")
+    {
+        <nav class="navbar navbar-default">
+            <div class="container">
+          
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/admin/default/index">
+                       NETCORPORATE
+                    </a>
+                </div>
+
+          
+                <div class="collapse navbar-collapse" id="menu">
+
+                    <ul class="nav navbar-nav">
+                
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Mantenimiento <span class="caret"></span>
+                            </a>
+                        
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="~/admin/Empresa">Empresa</a>
+                                </li>
+
+                                <li>
+                                    <a href="~/admin/cliente">Cliente</a>
+                                </li>
+
+                                <li>
+                                    <a href="~/admin/sucursal">Sucursal</a>
+                                </li>
+
+
+                            </ul>
+                          
+
+
+                        </li>
+             
+                    </ul>
+
+                    <ul class="nav navbar-nav">
+
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Seguridad <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="~/admin/Usuario/">Usuarios</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav">
+
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Renting <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="~/admin/orden/">Orden</a>
+                                </li>
+
+                                <li>
+                                    <a href="~/admin/detalleordens/">Detalle</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav">
+
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Integración <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="~/admin/default/ServiceInventori">Inventario</a>
+                                </li>
+
+                                <li>
+                                    <a href="~/admin/default/ServiceHelpdesk">HelpDesk</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+
+
+
+
+
+               
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img id="user-pic" src="~/Areas/Admin/img/@usuario.foto"  />
+                                <b>Hola</b>, @usuario.nombre <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="~/admin/Perfil/MiPerfil">Ver Perfil</a>
+                                </li>
+                                <li>
+                                    <a href="~/home/index">Modo Cliente</a>
+                                </li>
+                                <li>
+                                    <a href="~/admin/login/logout">Finalizar Sesión</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    }
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                @*@if (controlador != "login")
+                {
+                    <section class="content-header">
+
+                        <ol class="breadcrumb">
+                            <li><a href="#"><i class="fa fa-bars"> Menu</i> </a></li>
+
+                            <li class="active"> @controlador.ToString()</li>
+                        </ol>
+                    </section>
+                }*@
+
+
+          
+                @RenderBody()
+            </div>
+        </div>
+
+        @if (controlador != "login")
+        {
+                <div class="well text-center">
+                    2019 - SDS <a  href="#">Netcorporate</a>.
+                </div>
+        }
+    </div>
+
+    <script src="~/Areas/Admin/Assets/js/bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Assets/js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+    <script src="~/Areas/Admin/Assets/js/jquery.form.js"></script>
+
+    <script src="~/Areas/Admin/Assets/js/ini.js"></script>
+
+    <script src="~/Areas/Admin/Assets/js/jquery.anexgrid.min.js"></script>
+    <script src="~/Areas/Admin/Assets/js/jquery.validate.min.js"></script>
+    <script src="~/Areas/Admin/Assets/js/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

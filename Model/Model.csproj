@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{98895288-51B5-4C9D-85EA-C0F3B476F33C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnexGRID.cs" />
+    <Compile Include="CatalogoPrecios.cs" />
+    <Compile Include="Cliente.cs" />
+    <Compile Include="CorreoConfig.cs" />
+    <Compile Include="DetalleOrden.cs" />
+    <Compile Include="Empresa.cs" />
+    <Compile Include="Events.cs" />
+    <Compile Include="Facturacion.cs" />
+    <Compile Include="Hardware.cs" />
+    <Compile Include="HardwareInfo.cs" />
+    <Compile Include="Liquidacion.cs" />
+    <Compile Include="LiquidacionFacturacion.cs" />
+    <Compile Include="mesServicio.cs" />
+    <Compile Include="Migrations\202004040604327_InitialCreate.cs" />
+    <Compile Include="Migrations\202004040604327_InitialCreate.Designer.cs">
+      <DependentUpon>202004040604327_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004040618254_InitialCreate1.cs" />
+    <Compile Include="Migrations\202004040618254_InitialCreate1.Designer.cs">
+      <DependentUpon>202004040618254_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005282231438_InitialCreate2.cs" />
+    <Compile Include="Migrations\202005282231438_InitialCreate2.Designer.cs">
+      <DependentUpon>202005282231438_InitialCreate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005282246035_InitialCreate3.cs" />
+    <Compile Include="Migrations\202005282246035_InitialCreate3.Designer.cs">
+      <DependentUpon>202005282246035_InitialCreate3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005282259104_InitialCreate4.cs" />
+    <Compile Include="Migrations\202005282259104_InitialCreate4.Designer.cs">
+      <DependentUpon>202005282259104_InitialCreate4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005290703171_InitialCreate5.cs" />
+    <Compile Include="Migrations\202005290703171_InitialCreate5.Designer.cs">
+      <DependentUpon>202005290703171_InitialCreate5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006152202298_Liquidacion01.cs" />
+    <Compile Include="Migrations\202006152202298_Liquidacion01.Designer.cs">
+      <DependentUpon>202006152202298_Liquidacion01.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006181942293_columnafechaejecucion.cs" />
+    <Compile Include="Migrations\202006181942293_columnafechaejecucion.Designer.cs">
+      <DependentUpon>202006181942293_columnafechaejecucion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006181950116_columnafechaejecucion1.cs" />
+    <Compile Include="Migrations\202006181950116_columnafechaejecucion1.Designer.cs">
+      <DependentUpon>202006181950116_columnafechaejecucion1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006182102434_columnafjecucionnfacturacion.cs" />
+    <Compile Include="Migrations\202006182102434_columnafjecucionnfacturacion.Designer.cs">
+      <DependentUpon>202006182102434_columnafjecucionnfacturacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006202218105_nuevastablasmesservicio.cs" />
+    <Compile Include="Migrations\202006202218105_nuevastablasmesservicio.Designer.cs">
+      <DependentUpon>202006202218105_nuevastablasmesservicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006220153159_3camposservcio.cs" />
+    <Compile Include="Migrations\202006220153159_3camposservcio.Designer.cs">
+      <DependentUpon>202006220153159_3camposservcio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Orden.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProyectoContext.cs" />
+    <Compile Include="ReportingNumOrden.cs" />
+    <Compile Include="Reporting.cs" />
+    <Compile Include="ResponseModel.cs" />
+    <Compile Include="Servicio.cs" />
+    <Compile Include="Sucursal.cs" />
+    <Compile Include="TablaLiquidacones.cs" />
+    <Compile Include="Usuario.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{b5957bc6-e1a2-4f6c-bafa-fabb0b9cbdac}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202004040604327_InitialCreate.resx">
+      <DependentUpon>202004040604327_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004040618254_InitialCreate1.resx">
+      <DependentUpon>202004040618254_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005282231438_InitialCreate2.resx">
+      <DependentUpon>202005282231438_InitialCreate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005282246035_InitialCreate3.resx">
+      <DependentUpon>202005282246035_InitialCreate3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005282259104_InitialCreate4.resx">
+      <DependentUpon>202005282259104_InitialCreate4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005290703171_InitialCreate5.resx">
+      <DependentUpon>202005290703171_InitialCreate5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006152202298_Liquidacion01.resx">
+      <DependentUpon>202006152202298_Liquidacion01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006181942293_columnafechaejecucion.resx">
+      <DependentUpon>202006181942293_columnafechaejecucion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006181950116_columnafechaejecucion1.resx">
+      <DependentUpon>202006181950116_columnafechaejecucion1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006182102434_columnafjecucionnfacturacion.resx">
+      <DependentUpon>202006182102434_columnafjecucionnfacturacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006202218105_nuevastablasmesservicio.resx">
+      <DependentUpon>202006202218105_nuevastablasmesservicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006220153159_3camposservcio.resx">
+      <DependentUpon>202006220153159_3camposservcio.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

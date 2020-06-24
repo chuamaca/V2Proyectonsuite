@@ -1,0 +1,442 @@
+﻿@model Model.Liquidacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Liquidacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.procesos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.procesos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contratointerno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contratointerno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.refacturable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.refacturable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.referencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.referencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.doc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.doc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numerodocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numerodocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_fact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_fact)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaemision)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaemision)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechainicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechainicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechafin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechafin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.credito)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.credito)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rucempresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rucempresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.responsable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.responsable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sucursal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sucursal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ruccliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ruccliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuariofinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuariofinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipousuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipousuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ordenservicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ordenservicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaordenservicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaordenservicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rqcliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rqcliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contrato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contrato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.guiaremision)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.guiaremision)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codigoequipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigoequipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipoequipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipoequipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.serie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.modelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.modelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.parnumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parnumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bateria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bateria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cargador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cargador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.procesador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.procesador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.velocidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.velocidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ram)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ram)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.disco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.disco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.licencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.licencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreequipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreequipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuariooficce)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuariooficce)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cableseguridad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cableseguridad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mouse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mouse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.maletin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.maletin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.softwareadicional)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.softwareadicional)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.accesorios)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.accesorios)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.observaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.observaciones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.moneda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.moneda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.igv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.igv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sefacturo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sefacturo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idLiquidaciones }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
