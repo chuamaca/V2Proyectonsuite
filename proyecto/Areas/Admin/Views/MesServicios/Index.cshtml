@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+
+
+
+<table class="table" id="tablaOsinM">
+    <thead>
+        <tr>
+            <th>ORDEN</th>
+            <th>PROCESO</th>
+            <th>CANTIDAD</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+
+@*<script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.bootstrap.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/dataTables.buttons.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.flash.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.html5.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.print.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.colVis.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/dataTables.select.min.js"></script>*@
+
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script>
+
+    $("#tablaOsinM").DataTable({
+        destroy: true,
+        responsive: true,
+       
+        ajax: {
+            "method": "GET",
+            "dataType": "json",
+            "dataSrc": function (json) {
+                return json;
+            },
+            "url": '@Url.Content("~/admin/messervicios/ListarOrdenesSinMes?abc=abc")'
+        },
+        columns: [
+                { "data": 'JS_orden_id' },
+                { "data": 'JS_codigoorden' },
+                { "data": 'JS_cantidad' }
+        ],
+        columnDefs: [ {
+            "targets": 0,
+            "data": "download_link",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='@Url.Content("~/admin/orden/crud/")"+data+"'>"+data+"</a>";
+            }
+        } ],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copy',
+                exportOptions: {
+                    //0 -53
+                    columns: [0, ':visible']
+                }
+            },
+            {
+                extend: 'csv',
+                exportOptions: {
+                    columns: [0, ':visible']
+                }
+            },
+             {
+                 extend: 'excel',
+                 exportOptions: {
+                     columns: [0, ':visible']
+                 }
+             },
+            {
+                extend: 'pdf',
+                exportOptions: {
+                    columns: [0, ':visible']
+                }
+            }
+        ]
+    })
+
+</script>

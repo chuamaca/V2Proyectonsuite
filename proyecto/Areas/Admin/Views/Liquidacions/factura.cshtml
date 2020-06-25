@@ -1,0 +1,416 @@
+﻿
+@{
+    ViewBag.Title = "Resumen facturación";
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+     
+
+        var miurl = '@Url.Content("~/admin/orden/Search_Empresa/")';
+        $(".empresa").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: miurl,
+                    data: { Prefix_empresa: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.nmempresa,
+                                value: item.nmempresa
+                            };
+                        }))
+                    }
+                })
+            }
+                ,
+            messages: {
+                noResults: "No results",
+                results: function (count) {
+                    return count + (count == 0 ? ' result' : ' results');
+                }
+            }
+        });
+    })
+</script>
+
+
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+
+
+
+
+
+
+   <div class="body-content">
+
+       <form action="/" method="post">
+           <div class="row">
+               <div class="col-sm-2 col-md-2"><input type="text" class="mes input-12" name="name" value="" placeholder="Mes" /></div>
+               <div class="col-sm-2 col-md-2"> <input type="text" class="empresa input-12" name="name" value="" placeholder="Empresa" /></div>
+               <div class="col-sm-3 col-md-3">  <button class="btn btn-info btn-xs" type="submit" id="consultarF">Generar Resumen</button></div>
+           </div>
+       </form>
+
+
+   </div>
+
+    
+
+<hr />
+
+<div id="aquiTabla" class="table-responsive">
+
+</div>
+
+@*<table class="table" id="tabladF">
+    <thead>
+       <tr>
+           <th>referencia</th>
+           <th>empresa</th>
+       </tr>
+        @*<th>grupoeconomico</th>
+        <th>refacturable</th>
+        <th>ordenservicio</th>
+        <th>fechaordenservicio</th>
+        <th>rqcliente</th>
+        <th>procesos</th>
+        <th>fechainicio</th>
+        <th>fechafin</th>
+        <th>sucursal</th>
+        <th>contratointerno</th>
+        <th>ruccliente</th>
+        <th>cliente</th>
+        <th>tipo</th>
+        <th>valor</th>
+        <th>cantidad</th>
+        <th>igv</th>
+        <th>total</th>
+        <th>idplus</th>
+        <th>numerodocumento</th>
+    </thead>
+    <tbody id="tablaFactura">
+
+    </tbody>
+</table>*@
+
+@*@<table id="tablaF">
+
+</table>*@
+<!-- page specific plugin scripts -->
+<script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.bootstrap.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/dataTables.buttons.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.flash.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.html5.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.print.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.colVis.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/dataTables.select.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<!-- ace scripts -->
+<script src="~/Areas/Admin/assetsAce/js/ace-elements.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/ace.min.js"></script>
+
+<script>
+        
+    $("#consultarF").click(function (e) {
+        e.preventDefault();
+        var mes = $(".mes").val()
+        var empresa = $(".empresa").val()
+        console.log("hola")
+        formarTabla(mes, empresa)
+        
+       
+    })
+
+    
+    function formarTabla(mess, empresaa){
+        var empresa = empresaa
+        var mes = mess
+        console.log(empresa)
+        console.log(mes)
+        $.ajax({
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: '@Url.Content("~/admin/liquidacions/GetRpt_facturacion")' + "?mes=" + mes + '&empresa=' + empresa,
+            data: '',
+            success: function (data) {
+                console.log(typeof (data))
+                var tabla
+
+                tabla = '<table class="table " id="tablaFa">'
+                        + '<thead>'
+                        + '<tr>'
+                         + '<th>REF</th>'
+                          + '<th>EMPRESA</th>'
+                          + '<th>GRUPO</th>'
+                            + '<th>REFACTURABLE</th>'
+                            + '<th>OS</th>'
+                            + '<th>F.OS</th>'
+                            + '<th>RQ</th>'
+                            + '<th>PROCESO</th>'
+                            + '<th>F. INICIO</th>'
+                            + '<th>F. FIN</th>'
+                            + '<th>SUC</th>'
+                            + '<th>CI</th>'
+                            + '<th>RUC CLIENTE</th>'
+                            + '<th>CLIENTE</th>'
+                            + '<th>TIPO EQUIPO</th>'
+                            + '<th>VALOR</th>'
+                            + '<th>CANTIDAD</th>'
+                              + '<th>NETO</th>'
+                            + '<th>IGV</th>'
+                            + '<th>TOTAL</th>'
+                            + '<th>IDPLUS</th>'
+                            + '<th>FACTURA</th>'
+                        + '</tr>'
+                        + '</thead>'
+                         + '<tbody>'
+
+
+
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i])
+                    tabla += '<tr>'
+                        + '<td>' + data[i].referencia + '</td>'
+                         + '<td>' + data[i].empresa + '</td>'
+                         + '<td>' + data[i].grupoeconomico + '</td>'
+                         + '<td>' + data[i].refacturable + '</td>'
+                         + '<td>' + data[i].ordenservicio + '</td>'
+                         + '<td>' + data[i].fechaordenservicio + '</td>'
+                         + '<td>' + data[i].rqcliente + '</td>'
+                         + '<td>' + data[i].procesos + '</td>'
+                         + '<td>' + data[i].fechainicio + '</td>'
+                         + '<td>' + data[i].fechafin + '</td>'
+                         + '<td>' + data[i].sucursal + '</td>'
+                         + '<td>' + data[i].contratointerno + '</td>'
+                         + '<td>' + data[i].ruccliente + '</td>'
+                         + '<td>' + data[i].cliente + '</td>'
+                         + '<td>' + data[i].tipo + '</td>'
+                         + '<td>' + data[i].valor.toFixed(2) + '</td>'
+                         + '<td>' + data[i].cantidad + '</td>'
+                          + '<td>' + data[i].neto.toFixed(2) + '</td>'
+                         + '<td>' + data[i].igv.toFixed(2) + '</td>'
+                         + '<td>' + data[i].total + '</td>'
+                         + '<td>' + data[i].idplus + '</td>'
+                         + '<td>' + data[i].numerodocumento + '</td>'
+                        + '</tr>'
+                }
+
+                tabla += '</tbody>'
+                   + '</table>'
+
+                $("#aquiTabla").html(tabla)
+                dt();
+                //$.each(data, function () {             //})
+            }
+        })
+    }
+   
+    function dt() {
+        
+        jQuery(function ($) {
+            console.log("fordt")
+        $("#tablaFa").DataTable({
+            destroy: true,
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        //0 -53
+                        columns: [0, ':visible']
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, ':visible']
+                    }
+                },
+                 {
+                     extend: 'excel',
+                     exportOptions: {
+                         columns: [0, ':visible']
+                     }
+                 },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, ':visible']
+                    }
+                }
+            ]
+        })
+        })
+
+    }
+       
+
+</script>
+
+
+
+
+
+
+<script>
+    @*window.onload = function () {
+        var empresa = "ADECCO PERU S.A.";
+        var mes = "Abr-20";
+        $('#tablaF').DataTable({
+            "bProcessing": true,
+           "dataType": "json",
+            "type": "GET",
+            "sAjaxSource ": '@Url.Content("~/admin/liquidacions/GetRpt_facturacion")' + "?mes=" + mes + '&empresa=' + empresa,
+            "bPaginate":true,
+            "sPaginationType":"full_numbers",
+            "iDisplayLength": 5,
+            "aoColumns": [
+            { mData: 'referencia' } ,
+            { mData: 'empresa' },
+            { mData: 'grupoeconomico' },
+            { mData: 'refacturable' },
+            { mData: 'ordenservicio' },
+            { mData: 'fechaordenservicio' },
+            { mData: 'rqcliente' },
+            { mData: 'procesos' },
+            { mData: 'fechainicio' },
+            { mData: 'fechafin' },
+            { mData: 'sucursal' },
+            { mData: 'contratointerno' },
+            { mData: 'ruccliente' },
+            { mData: 'cliente' },
+            { mData: 'tipo' },
+            { mData: 'valor' },
+            { mData: 'cantidad' },
+            { mData: 'igv' },
+            { mData: 'total' },
+            { mData: 'idplus' },
+            { mData: 'numerodocumento' },
+        ]
+         //{ "data": 'referencia' },
+         //       { "data": 'empresa' },
+         //       { "data": 'grupoeconomico' },
+         //       { "data": 'refacturable' },
+         //       { "data": 'ordenservicio' },
+         //       { "data": 'fechaordenservicio' },
+         //       { "data": 'rqcliente' },
+         //       { "data": 'procesos' },
+         //       { "data": 'fechainicio' },
+         //       { "data": 'fechafin' },
+         //       { "data": 'sucursal' },
+         //       { "data": 'contratointerno' },
+         //       { "data": 'ruccliente' },
+         //       { "data": 'cliente' },
+         //       { "data": 'tipo' },
+         //       { "data": 'valor' },
+         //       { "data": 'cantidad' },
+         //       { "data": 'igv' },
+         //       { "data": 'total' },
+         //       { "data": 'idplus' },
+         //       { "data": 'numerodocumento' }
+        });
+    }*@
+    //$('#tablaF').DataTable({
+    @*window.onload = function () {
+        var empresa = "ADECCO PERU S.A.";
+        var mes = "Abr-20";
+        $("#tablaF").DataTable({
+            "destroy": true,
+            "responsive": true,
+            "order": [[0, "desc"]],
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "language": {
+                "emptyTable": "No hay datos disponibles en la tablaAA.",
+                "info": "Del START al END de TOTAL ",
+                "infoEmpty": "Mostrando 0 registros de un total de 0.",
+                "infoFiltered": "(filtrados de un total de MAX registros)",
+                "infoPostFix": "(actualizados)",
+                "lengthMenu": "Mostrar MENU registros",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "searchPlaceholder": "Dato para buscar",
+                "zeroRecords": "No se han encontrado coincidencias.",
+                "paginate": {
+                    "first": "Primera",
+                    "last": "Última",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "aria": {
+                    "sortAscending": "Ordenación ascendente",
+                    "sortDescending": "Ordenación descendente"
+                }
+            },
+
+            "ajax": {
+                "method": "GET",
+                "dataType": "json",
+                "dataSrc": function (json) {
+                    //respuesta
+                    console.log(json)
+                    //convierte a string
+                    var stringified = JSON.stringify(json);
+                    //imprime string
+                    console.log(stringified)
+                    //convierte a json
+                    js = JSON.parse(stringified)
+                    //imprime json
+                    console.log(js)
+                    //reton
+                    return stringified;
+                },
+                "url": '@Url.Content("~/admin/liquidacions/GetRpt_facturacion")' + "?mes=" + mes + '&empresa=' + empresa
+            },
+            "columns": [
+                { "data": 'referencia' },
+                { "data": 'empresa' },
+                { "data": 'grupoeconomico' },
+                { "data": 'refacturable' },
+                { "data": 'ordenservicio' },
+                { "data": 'fechaordenservicio' },
+                { "data": 'rqcliente' },
+                { "data": 'procesos' },
+                { "data": 'fechainicio' },
+                { "data": 'fechafin' },
+                { "data": 'sucursal' },
+                { "data": 'contratointerno' },
+                { "data": 'ruccliente' },
+                { "data": 'cliente' },
+                { "data": 'tipo' },
+                { "data": 'valor' },
+                { "data": 'cantidad' },
+                { "data": 'igv' },
+                { "data": 'total' },
+                { "data": 'idplus' },
+                { "data": 'numerodocumento' }
+            ]
+
+        });
+    }*@
+    //    }	    //} );
+
+</script>

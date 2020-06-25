@@ -1,0 +1,543 @@
+﻿@model  Model.Orden
+
+@{
+    Model.Usuario usuario = new Model.Usuario().ObtenerPerfil(Helper.SessionHelper.GetUser());
+    ViewBag.Title = "Solicitud de Alquiler";
+
+}
+
+
+@using (Html.BeginForm("GuardarForm", "renting", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+
+        <div class="form-group">
+
+            @Html.HiddenFor(x => x.idorden)
+            @Html.TextBoxFor(x => x.generateuserorden, htmlAttributes: new { @Value = usuario.nombre, @type = "hidden" })
+            @Html.TextBoxFor(x => x.generateempresaorden, htmlAttributes: new { @Value = usuario.razonsocial, @type = "hidden" })
+
+            @Html.TextBoxFor(x => x.estadoorden, htmlAttributes: new { @Value = "1", @type = "hidden" })
+
+            @Html.TextBoxFor(x => x.fsolicitudorden, new { @class = "input-12 datepicker", @type = "hidden" })
+            @Html.TextBoxFor(x => x.fentregaorden, new { @class = "input-12 datepicker", @type = "hidden" })
+
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title">DATOS DEL CLIENTE</h4>
+
+                    <div class="widget-toolbar">
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+
+                        <a href="#" data-action="close">
+                            <i class="ace-icon fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="widget-body" style="display: block;">
+                    <div class="widget-main row">
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.codigoorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.codigoorden, new { @class = "input-12 ", placeholder = "" })
+                                @Html.ValidationMessageFor(x => x.codigoorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            @Html.LabelFor(x => x.empresaorden, new { @class = "control-label pull-left" })
+                            <div>
+                                @Html.EditorFor(x => x.empresaorden, new { htmlAttributes = new { @class = "input-12", @Value = usuario.razonsocial } })
+                                @Html.ValidationMessageFor(x => x.empresaorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.sucursalorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.EditorFor(x => x.sucursalorden, new { htmlAttributes = new { @class = "input-12", placeholder = "Buscar Sucursal" } })
+                                @Html.ValidationMessageFor(x => x.sucursalorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.clienteorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.EditorFor(x => x.clienteorden, new { htmlAttributes = new { @class = "input-12", placeholder = "Buscar Cliente" } })
+                                @Html.ValidationMessageFor(x => x.clienteorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.contratointernoorden, new { @class = "control-label pull-left" })
+                            <div>
+                                @Html.EditorFor(x => x.contratointernoorden, new { htmlAttributes = new { @class = "input-12" } })
+                                @Html.ValidationMessageFor(x => x.contratointernoorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.refacturableorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.EditorFor(x => x.refacturableorden, new { htmlAttributes = new { @class = "input-12", placeholder = "SI REFACTURABLE/NO REFACTURABLE" } })
+                                @Html.ValidationMessageFor(x => x.refacturableorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <hr style="background-color: #e6e6e6 ; height:2px; width:100%;">
+                        </div>
+                        <hr>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.rqservicio, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.rqservicio, new { @class = "input-12", placeholder = "" })
+                                @Html.ValidationMessageFor(x => x.rqservicio, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.ordenservicio, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.ordenservicio, new { @class = "input-12", placeholder = "" })
+                                @Html.ValidationMessageFor(x => x.ordenservicio, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.hardwaredevice, new { @class = "control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.hardwaredevice, new { @class = "input-12", placeholder = "NOTEBOOK/DESKTOP/IMPRESORA" })
+                                @Html.ValidationMessageFor(x => x.hardwaredevice, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.redequipoorden, new { @class = "control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.redequipoorden, new { @class = "input-12", placeholder = "Equipo en Red" })
+                                @Html.ValidationMessageFor(x => x.redequipoorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.tipohardware, new { @class = "control-label pull-left" })
+                            <div>
+                                <select id="tipohardwaree" name="tipohardware"></select>
+                                @*@Html.TextBoxFor(x => x.tipohardware, new { @class = "input-12", placeholder = "" })*@
+                                @Html.ValidationMessageFor(x => x.tipohardware, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.cantidadhardware, new { @class = "control-label pull-left" })
+                            @Html.TextBoxFor(x => x.cantidadhardware, new { @class = "input-12", placeholder = "", id = "cantidad_a_generar" })
+                            <button id="btn_generar" class="btn btn-sm btn-primary">Agregar</button>
+                            @Html.ValidationMessageFor(x => x.cantidadhardware, null, new { @class = "label label-danger" })
+
+
+                        </div>
+
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-xs-12 col-sm-6">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title">DATOS DEL RESPONSABLE</h4>
+
+                    <div class="widget-toolbar">
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+
+                        <a href="#" data-action="close">
+                            <i class="ace-icon fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="widget-body" style="display: block;">
+                    <div class="widget-main row">
+
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.responsableorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.responsableorden, new { @class = "input-12", @Value = usuario.nombre, placeholder = "Buscar Cliente" })
+                                @Html.ValidationMessageFor(x => x.responsableorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.ubicacionequipoorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.ubicacionequipoorden, new { @class = "input-12", placeholder = "" })
+                                @Html.ValidationMessageFor(x => x.ubicacionequipoorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.telefonoresponsableorden, new { @class = "control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.telefonoresponsableorden, new { @class = "input-12", placeholder = "" })
+                                @Html.ValidationMessageFor(x => x.telefonoresponsableorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.tipousuarioorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.tipousuarioorden, new { @class = "input-12", placeholder = "PASS-INTERNO-OTRO" })
+                                @Html.ValidationMessageFor(x => x.tipousuarioorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 " hidden>
+                            @Html.LabelFor(x => x.equipousuarioorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.equipousuarioorden, new { @class = "input-12", placeholder = "", id = "usuario_general" })
+                                @Html.ValidationMessageFor(x => x.equipousuarioorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 " hidden>
+                            @Html.LabelFor(x => x.telefonousuarioorden, new { @class = " control-label pull-left" })
+                            <div>
+                                @Html.TextBoxFor(x => x.telefonousuarioorden, new { @class = "input-12", placeholder = "", id = "telefono_general" })
+                                @Html.ValidationMessageFor(x => x.telefonousuarioorden, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+
+
+                        <div id="generado_usuario">
+
+                        </div>
+                        <br />
+
+                        <div hidden class="col-sm-12" id="btn_asignar"><button id="asignar_datos_usuario" type="button" class="btn btn-sm btn-primary">Confirmar</button></div>
+
+                        <hr />
+                        <div class="col-sm-12">
+
+                            @Html.LabelFor(x => x.Observacionesorden, new { @class = "control-label pull-left" })
+                            
+                                @Html.TextAreaFor(x => x.Observacionesorden, new { @class = "input-12" })
+                                @Html.ValidationMessageFor(x => x.Observacionesorden, null, new { @class = "label label-danger" })
+             
+
+                        </div>
+
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="guardar" hidden class="col-sm-12">
+            <button hidden type="submit" data-ajax="true" class="btn btn-success btn-sm pull-right" hi>
+                <span class="spinner-border spinner-border-sm mr-2"></span>
+                Guardar
+            </button>
+        </div>
+
+
+    </div>
+}
+
+
+<script>
+    $("#btn_generar").on('click', function (e) {
+        e.preventDefault();
+       let cantidad= $("#cantidad_a_generar").val();
+      // alert(cantidad);
+       let variable = "";
+       if (cantidad > 0) {
+           for (var i = 1; i <= cantidad; i++) {
+
+               variable += '<div class="col-sm-6">' +
+                                 '<label for="form-field-8">Usuario  ' + i + ' </label>' +
+                                 '<input id="equipo_usuario_' + i + '" class="form-control" type="text" name="" value="" />' +
+
+                            ' </div>'
+                          + '<div class="col-sm-6">' +
+                               '<label for="form-field-8">Telefono  ' + i + ' </label>' +
+                               '<input id="telefonousuarioorden_' + i + '" class="form-control" type="text" name="" value="" />' +
+
+                          ' </div>'
+               /* + '<div class="col-sm-4">' +
+                     '<label for="form-field-8">Ubicacion  ' + i + ' </label>' +
+                     '<input id="cantidad_a_generar" class="form-control" type="text" name="cantidad" value="" />' +
+
+                ' </div>'*/
+           }
+
+           $("#btn_asignar").attr('hidden', false)
+           $("#generado_usuario").html(variable)
+       }
+       console.log($("#cantidad_a_generar").val())
+    })
+</script>
+
+
+<script>
+    $("#asignar_datos_usuario").on('click', function (e) {
+
+        e.preventDefault();
+
+        let cantidad = $("#cantidad_a_generar").val();
+
+        let nombre = "";
+        let telefono = "";
+        for (var i = 1; i <= cantidad; i++) {
+
+            nombre += $("#equipo_usuario_" + i).val() + "-";
+            telefono += $("#telefonousuarioorden_" + i).val() + "-";
+        }
+        console.log(nombre);
+        console.log(telefono);
+        $("#usuario_general").val(nombre);
+        $("#telefono_general").val(telefono);
+
+        $("#guardar").removeAttr("hidden");
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var porId = document.getElementById("idorden").value
+        var miurl;
+        if (porId > 0) {
+            miurl = "../Search_Empresa/";
+        } else {
+            miurl = "../Search_Empresa/";
+        }
+        $("#empresaorden").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: miurl,
+                    data: { Prefix_empresa: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.nmempresa,
+                                value: item.nmempresa
+                            };
+                        }))
+                    }
+                })
+            }
+                ,
+            messages: {
+                noResults: "No results",
+                results: function (count) {
+                    return count + (count == 0 ? ' result' : ' results');
+                }
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var porId = document.getElementById("idorden").value
+        var miurl;
+        if (porId > 0) {
+            miurl = "../Search_Cliente/";
+        } else {
+            miurl = "../Search_Cliente/";
+        }
+        $("#clienteorden").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: miurl,
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.nmcliente, value: item.nmcliente };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "No results",
+                results: function (count) {
+                    return count + (count == 0 ? ' result' : ' results');
+                }
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var porId = document.getElementById("idorden").value
+        var miurl;
+        if (porId > 0) {
+            miurl = "../Search_Sucursal/";
+        } else {
+            miurl = "../Search_Sucursal/";
+        }
+        $("#sucursalorden").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: miurl,
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix_sucursal: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.nmsucursal, value: item.nmsucursal };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "No results",
+                results: function (count) {
+                    return count + (count == 0 ? ' result' : ' results');
+                }
+            }
+        });
+    })
+</script>
+
+<script>
+    $(function () {
+        var dateFormat = "",
+          from = $("#fsolicitudorden")
+            .datepicker({
+                defaultDate: "+1w",
+                beforeShowDay: $.datepicker.noWeekends,
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                numberOfMonths: 1
+            })
+            .on("change", function () {
+                to.datepicker("option", "minDate", getDate(this));
+            }),
+          to = $("#fentregaorden").datepicker({
+              defaultDate: "+1w",
+              beforeShowDay: $.datepicker.noWeekends,
+              dateFormat: "dd/mm/yy",
+              changeMonth: true,
+              numberOfMonths: 1
+          })
+          .on("change", function () {
+              from.datepicker("option", "maxDate", getDate(this));
+          });
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate(dateFormat = "dd/mm/yy", element.value);
+            } catch (error) {
+                date = null;
+            }
+            return date;
+        }
+    });
+</script>
+
+<script>
+    $(function () {
+        var dateFormat = "",
+          from = $("#rentinginicio")
+            .datepicker({
+                defaultDate: "+1w",
+                beforeShowDay: $.datepicker.noWeekends,
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                numberOfMonths: 1
+            })
+            .on("change", function () {
+                to.datepicker("option", "minDate", getDate(this));
+            }),
+          to = $("#rentingfin").datepicker({
+              defaultDate: "+1w",
+              beforeShowDay: $.datepicker.noWeekends,
+              dateFormat: "dd/mm/yy",
+              changeMonth: true,
+              numberOfMonths: 1
+          })
+          .on("change", function () {
+              from.datepicker("option", "maxDate", getDate(this));
+          });
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate(dateFormat = "dd/mm/yy", element.value);
+            } catch (error) {
+                date = null;
+            }
+            return date;
+        }
+    });
+</script>
+
+<script>
+    window.onload = function () {
+        var fecha = new Date(); //Fecha actual
+        var mes = fecha.getMonth() + 1; //obteniendo mes
+        var dia = fecha.getDate(); //obteniendo dia
+        var ano = fecha.getFullYear(); //obteniendo año
+        if (dia < 10)
+            dia = '0' + dia; //agrega cero si el menor de 10
+        if (mes < 10)
+            mes = '0' + mes //agrega cero si el menor de 10
+        document.getElementById('fsolicitudorden').value = dia + "/" + mes + "/" + ano;
+        document.getElementById('fentregaorden').value = dia + 1 + "/" + mes + "/" + ano;
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        console.log('aqui prueva')
+        let empresaa = $("#empresaorden").val();
+
+        console.log("Aa " + empresaa)
+
+            $.ajax({
+                dataType: "json",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: '@Url.Content("~/client/renting/ListarTipoPorEmpresa")' + "?empresanombre=" + empresaa,
+                data:'',
+                success: function (data) {
+                    //let dato = JSON.parse(data)
+
+                   // data.forEach(element => console.log(element.nombre))
+                  //  console.log(data)
+                   
+                    $("#tipohardwaree").html("");
+                    $("#tipohardwaree").html("<option > tipo </option>");
+                    let opciones = "";
+
+
+
+
+                    data.forEach(element => opciones += "<option value='" + element.nombre + "'>" + element.nombre + "</option>")
+                    console.log("opciones "+opciones)
+                    $("#tipohardwaree").html(opciones)
+                    
+
+                }
+            })
+
+    })
+</script>

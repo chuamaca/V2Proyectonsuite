@@ -1,0 +1,818 @@
+﻿@model Model.DetalleOrden
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<ol class="breadcrumb">
+    <li><a href="~/admin/Orden/">Orden</a></li>
+    <li class="active"> Detalle de Orden </li>
+</ol>
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+<script>
+
+    $(document).ready(function () {
+        $("#chkdwn2").click(function () {
+            if ($(this).is(":checked")) {
+                $("#Orden_Id").prop("disabled", true);
+            } else {
+                $("#Orden_Id").prop("disabled", false);
+            }
+        });
+    });
+
+</script>
+
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formulario" }))
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <div class="well">
+            <div id="yo" class="page">
+
+
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Informacion De Proceso</a></li>
+                    <li role="presentation"><a href="#detallehw" aria-controls="social" role="tab" data-toggle="tab">Detalles de Equipo</a></li>
+                    @*<li role="presentation"><a href="#inventario" aria-controls="inventario" role="tab" data-toggle="tab">Detalle Orden</a></li>*@
+
+                </ul>
+
+                        <div class="tab-content">
+
+                            <div role="tabpanel" class="tab-pane active" style="scrollbar-base-color:ButtonHighlight aliceblue;" id="info">
+
+                                <div class="form-horizontal">
+
+                                    <fieldset>
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.iddetalleorden)
+
+                                        <div class="form-group" >
+
+                                                @Html.LabelFor(model => model.Orden_Id, "PROCESO", htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.DropDownList("Orden_Id", null, htmlAttributes: new { @class = "input-12" })
+                                                    <input type="checkbox" id="chkdwn2" value="feedback" checked />
+                                                    @Html.ValidationMessageFor(model => model.Orden_Id, "", new { @class = "label label-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(x => x.seriedt, new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-6">
+                                                    @Html.TextAreaFor(x => x.seriedt, new { @class = "input-12", placeholder = "" })
+                                                    @Html.ValidationMessageFor(x => x.seriedt, null, new { @class = "label label-danger" })
+                                                </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(x => x.fregistro, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.TextBoxFor(x => x.fregistro, new { @class = "input-12 datepicker", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.fregistro, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                            @Html.LabelFor(x => x.gremision, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.TextBoxFor(x => x.gremision, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.gremision, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.sefacturo, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.EditorFor(model => model.sefacturo, new { htmlAttributes = new { @class = "input-12" } })
+                                                @Html.ValidationMessageFor(model => model.sefacturo, "", new { @class = "text-danger" })
+                                            </div>
+
+                                            @Html.LabelFor(model => model.tipohardwareestado, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.EditorFor(model => model.tipohardwareestado, new { htmlAttributes = new { @class = "input-12" } })
+                                                @Html.ValidationMessageFor(model => model.tipohardwareestado, "", new { @class = "text-danger" })
+                                            </div>
+
+
+                                      
+
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(x => x.identificador, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.TextBoxFor(x => x.identificador, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.identificador, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                            @Html.LabelFor(x => x.descripciontipohardwareestado, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-6">
+                                                @Html.TextAreaFor(x => x.descripciontipohardwareestado, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.descripciontipohardwareestado, null, new { @class = "label label-danger" })
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <hr />
+
+                                        <div class="form-group">
+                                                @Html.LabelFor(model => model.usuariof, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-4">
+                                                    @Html.EditorFor(model => model.usuariof, new { htmlAttributes = new { @class = "input-12" } })
+                                                    @Html.ValidationMessageFor(model => model.usuariof, "", new { @class = "text-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(model => model.telefonof, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.telefonof, new { htmlAttributes = new { @class = "input-12" } })
+                                                    @Html.ValidationMessageFor(model => model.telefonof, "", new { @class = "text-danger" })
+                                                </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                                @Html.LabelFor(model => model.ubicacion, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-4">
+                                                    @Html.EditorFor(model => model.ubicacion, new { htmlAttributes = new { @class = "input-12" } })
+                                                    @Html.ValidationMessageFor(model => model.ubicacion, "", new { @class = "text-danger" })
+                                                </div>
+                                        </div>
+
+                                      
+
+                                        <hr />
+         
+                                            <div class="form-group fc-color-picker" >
+
+                                                @Html.LabelFor(model => model.moneda, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.moneda, new { htmlAttributes = new { @class = "input-12" } })
+                                                    @Html.ValidationMessageFor(model => model.moneda, "", new { @class = "text-danger" })
+                                                </div>
+
+
+                                                @Html.LabelFor(model => model.valor, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.valor, new { htmlAttributes = new { @class = "input-12"  } })
+                                                    @Html.ValidationMessageFor(model => model.valor, "", new { @class = "text-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(model => model.IGV, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.IGV, new { htmlAttributes = new { @class = "input-12" , disabled = "disabled" } })
+                                                    @Html.ValidationMessageFor(model => model.IGV, "", new { @class = "text-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(model => model.total, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "input-12" , disabled = "disabled" } })
+                                                    @Html.ValidationMessageFor(model => model.total, "", new { @class = "text-danger" })
+                                                </div>
+
+                                            </div>
+
+                                        <hr />
+
+                                            <div class="form-group">
+
+
+                             
+
+                                                @Html.LabelFor(x => x.obscambio, new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-6">
+                                                    @Html.TextAreaFor(x => x.obscambio, new { @class = "input-12", placeholder = "" })
+                                                    @Html.ValidationMessageFor(x => x.obscambio, null, new { @class = "label label-danger" })
+                                                </div>
+
+
+                                           
+                                            </div>
+
+                                    </fieldset>
+                                </div>
+
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" style="scrollbar-base-color:ButtonHighlight aliceblue;" id="detallehw">
+
+                                <div class="form-horizontal">
+
+                                    <fieldset>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Hardware_Id, "VALIDE", htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.DropDownList("Hardware_Id", null, htmlAttributes: new { @class = "input-12" })
+                                                @Html.ValidationMessageFor(model => model.Hardware_Id, "", new { @class = "label label-danger" })
+                                            </div>
+
+                                            <option id="click_cambio" value="2">CAMBIO</option>
+                                            @Html.LabelFor(model => model.estadodetalleorden, htmlAttributes: new { @class = "col-sm-1 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @*@Html.DropDownList("estadodetalleorden", null, htmlAttributes: new { @class = "input-12" })*@
+
+                                                <select id="estadodetalleordenn" name="estadodetalleorden" class="input-12">
+
+                                                    @if (Model.estadodetalleorden == 0)
+                                                    {
+                                                        <option id="click_salida" value="0">SALIDA</option>
+                                                            <option id="click_produccion" value="1">PRODUCCION</option>
+                                                            <option id="click_cambio" value="2">CAMBIO</option>
+
+                                                    }
+                                                    else if (Model.estadodetalleorden == 1)
+                                                    {
+                                                        <option id="click_produccion" value="1">PRODUCCION</option>
+                                                        <option id="click_salida" value="0">SALIDA</option>
+                                                        <option id="click_cambio" value="2">CAMBIO</option>
+                                                    }
+
+                                                    else if (Model.estadodetalleorden == 2)
+                                                    {
+                                                        <option id="click_cambio" value="2">CAMBIO</option>
+                                                        <option id="click_produccion" value="1">PRODUCCION</option>
+                                                            <option id="click_salida"  value="0">SALIDA</option>
+                                                          
+                                                    }
+                                                </select>
+
+
+
+                                                @*@Html.EditorFor(model => model.estadodetalleorden, new { htmlAttributes = new { @class = "input-12" } })
+            @Html.ValidationMessageFor(model => model.estadodetalleorden, "", new { @class = "text-danger" })*@
+
+
+                                            </div>
+                                            <div class="col-md-2" hidden>
+                                                <input type="type" id="estadovalor" name="name" value="" />
+                                            </div>
+
+                                            @Html.LabelFor(x => x.grecepcion, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.TextBoxFor(x => x.grecepcion, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.grecepcion, null, new { @class = "label label-danger" })
+                                            </div>
+
+
+
+                                          </div>
+
+
+                                   
+
+
+                                        <hr /><hr />
+
+                                      
+
+                                            <div class="form-group">
+
+
+                                                @Html.LabelFor(x => x.codigontb, new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.codigontb, new { @class = "input-12", placeholder = "" })
+                                                    @Html.ValidationMessageFor(x => x.codigontb, null, new { @class = "label label-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(x => x.typedevice, new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.typedevice, new { @class = "input-12", placeholder = "" })
+                                                    @Html.ValidationMessageFor(x => x.typedevice, null, new { @class = "label label-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(x => x.seriehw, new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.seriehw, new { @class = "input-12" })
+                                                    @Html.ValidationMessageFor(x => x.seriehw, null, new { @class = "label label-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(x => x.nmbrand, new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.nmbrand, new { @class = "input-12", placeholder = "" })
+                                                    @Html.ValidationMessageFor(x => x.nmbrand, null, new { @class = "label label-danger" })
+                                                </div>
+
+
+                                                @Html.LabelFor(x => x.nmmodel, new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.nmmodel, new { @class = "input-12", placeholder = "" })
+                                                    @Html.ValidationMessageFor(x => x.nmmodel, null, new { @class = "label label-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(x => x.partnumberhw, new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.partnumberhw, new { @class = "input-12" })
+                                                    @Html.ValidationMessageFor(x => x.partnumberhw, null, new { @class = "label label-danger" })
+                                                </div>
+                                            </div>
+
+                                          
+                                            <div class="form-group">
+
+                                                @Html.LabelFor(x => x.nmprocessor, new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.nmprocessor, new { @class = "input-12" })
+                                                    @Html.ValidationMessageFor(x => x.nmprocessor, null, new { @class = "label label-danger" })
+                                                </div>
+
+
+                                                @Html.LabelFor(x => x.ghzprocessor, new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.ghzprocessor, new { @class = "input-12", placeholder = "" })
+                                                    @Html.ValidationMessageFor(x => x.ghzprocessor, null, new { @class = "label label-danger" })
+                                                </div>
+
+
+                                                @Html.LabelFor(x => x.mcapacity, new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.TextBoxFor(x => x.mcapacity, new { @class = "input-12", placeholder = "ALQUILER" })
+                                                    @Html.ValidationMessageFor(x => x.mcapacity, null, new { @class = "label label-danger" })
+                                                </div>
+
+
+                                            </div>
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(x => x.capacitystorage, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.TextBoxFor(x => x.capacitystorage, new { @class = "input-12" })
+                                                @Html.ValidationMessageFor(x => x.capacitystorage, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                            @Html.LabelFor(x => x.nmequipo, new { @class = "col-sm-1 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.TextBoxFor(x => x.nmequipo, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.nmequipo, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                            @Html.LabelFor(x => x.lic, new { @class = "col-sm-1 control-label pull-left" })
+                                            <div class="col-md-2">
+                                                @Html.TextBoxFor(x => x.lic, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.lic, null, new { @class = "label label-danger" })
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.snbatery, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.snbatery, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.snbatery, null, new { @class = "label label-danger" })
+                                            </div>
+
+
+                                            @Html.LabelFor(x => x.sncharger, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.sncharger, new { @class = "input-12", placeholder = "" })
+                                                @Html.ValidationMessageFor(x => x.sncharger, null, new { @class = "label label-danger" })
+                                            </div>
+                                        </div>
+
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(x => x.obshw, new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-6">
+                                                    @Html.TextAreaFor(x => x.obshw, new { @class = "input-12" })
+                                                    @Html.ValidationMessageFor(x => x.obshw, null, new { @class = "label label-danger" })
+                                                </div>
+                                            </div>
+
+
+                                      
+                                        <hr />
+
+
+                                            <div class="form-group">
+
+
+                                                @Html.LabelFor(model => model.maleta, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.maleta, new { htmlAttributes = new { @class = "input-12" } })
+                                                    @Html.ValidationMessageFor(model => model.maleta, "", new { @class = "text-danger" })
+                                                </div>
+
+                                                @Html.LabelFor(model => model.cableseg, htmlAttributes: new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.cableseg, new { htmlAttributes = new { @class = "input-12" } })
+                                                    @Html.ValidationMessageFor(model => model.cableseg, "", new { @class = "text-danger" })
+                                                </div>
+
+
+                                                @Html.LabelFor(model => model.mouse, htmlAttributes: new { @class = "col-sm-1 control-label pull-left" })
+                                                <div class="col-md-2">
+                                                    @Html.EditorFor(model => model.mouse, new { htmlAttributes = new { @class = "input-12" } })
+                                                    @Html.ValidationMessageFor(model => model.mouse, "", new { @class = "text-danger" })
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                        <div class="form-group">
+                                           
+
+                                            @Html.LabelFor(model => model.accesorio, htmlAttributes: new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-6">
+                                                @Html.TextAreaFor(x => x.accesorio, new { @class = "input-12" })
+                                                @Html.ValidationMessageFor(model => model.accesorio, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                </fieldset>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="text-right well well-sm">
+                            @*<div class="text-right well well-sm">
+                                <div class="col-md-offset-2 col-md-10">
+                                  
+                                </div>
+                            </div>*@
+                         
+
+                            <div class="text-right well well-sm">
+
+                                <div class="col-md-offset-2 col-md-4">
+                                    @Html.ActionLink("Lista", "Index"  )
+                                </div>
+                                <div class="col-md-offset-2 col-md-4">
+                                    <input type="submit" id="" data-ajax="truasase" value="Guardar" class="btn btn-sm btn-success" />
+                                    @if (Model.grecepcion!=null)
+                                    {
+                                        <button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#modalCorreoGuiadeRecepcion" type="button" id="enviarGuiaRemison">Enviar guia de Recepcion</button>
+                                    }
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</div>
+
+}
+
+
+<div id="modalCorreoGuiadeRecepcion" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enviar a correo</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="correoaenviar" class="col-12 form-control" name="correo" placeholder="Ingrese el correo" value="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <a id="enviarGuiaRemision" class="btn btn-success" ">Enviar</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div id="cargando" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body" style="display:flex; justify-content:center;">
+                <img style="width:120px; margin :5px auto;" src="https://d203ovh1oelywy.cloudfront.net/images/icons/load.gif" />
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+                   url: '@Url.Content("~/admin/orden/nombreempresa/?miid_orden=")' + $("#Orden_Id").val(),
+                      data: '',
+                      datatype:'json',
+                      type: "GET",
+                      success: function (msg) {
+
+                          var nempresa = msg[0].empresaorden;
+                          $.ajax({
+                              url: '@Url.Content("~/admin/orden/buscartipohardware/?empresa=")' + nempresa,
+                              data: '',
+                              datatype: 'json',
+                              type: "GET",
+                              success: function (rpt) {
+
+                                  console.log(rpt);
+                              },
+                              error: function (result) {
+                                  alert("ERROR " + result.status + ' ' + result.statusText);
+                              }
+                          });
+
+                                                },
+                      error: function (result) {
+                          alert("ERROR " + result.status + ' ' + result.statusText);
+                      }
+                  });
+    });
+</script>
+<script>
+    $("#estadodetalleordenn").on("change", () => {
+        let estadoorden = $("#estadodetalleordenn").val();
+        let estadovalor = $("#estadovalor").val(estadoorden);
+
+       
+        if (estadoorden == 2) {
+            //cambio
+            let id = $("#Orden_Id").val()
+            let seriedt = $("#seriedt").val();
+            let preciovalor = $("#valor").val();
+            let igv = $("#IGV").val();
+            let total = $("#total").val();
+            let usuario = $("#usuariof").val();
+            let celular = $("#telefonof").val();
+            let ubicacion = $("#ubicacion").val();
+            let observacion = $("#obscambio").val();
+
+            let cableseg = $("#cableseg").val();
+            let mouse = $("#mouse").val();
+            let maleta = $("#maleta").val();
+            let accesorio = $("#accesorio").val();
+
+            let grecepcion = $("#grecepcion").val();
+            let seriehw = $("#seriehw").val();
+
+            let sefacturo = $("#sefacturo").val();
+            let moneda = $("#moneda").val();
+            
+
+            console.log("moneda " + moneda)
+
+            let tipohardwareestado = $("#tipohardwareestado").val();
+            let descripciontipohardwareestado = $("#descripciontipohardwareestado").val();
+            let identificador = $("#identificador").val();
+
+
+            Swal.fire({
+                title: 'Cambio de equipo',
+                text: "Desea cambiar equipo!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+
+                    window.open('@Url.Content("~/admin/orden/cambio/?ordenid=")'+ id+ "&ordendetalle=" + seriedt.replace(/ /g, '-') +
+                   "&usuario=" + usuario.replace(/ /g, '-') + "&celular=" + celular.replace(/ /g, '-') + "&ubicacion=" + ubicacion.replace(/ /g, '-') +
+                   "&observacion=" + observacion.replace(/ /g, '-') + "&valor=" + preciovalor + "&igv=" + igv
+                   + "&total=" + total + "&cable=" + cableseg.replace(/ /g, '-') + "&mouse=" + mouse.replace(/ /g, '-') + "&maleta=" + maleta.replace(/ /g, '-')
+                   + "&accesorio=" + accesorio.replace(/ /g, '-') + "&grecepcion=" + grecepcion.replace(/ /g, '-') +
+                   "&seriehw=" + seriehw + "&sefacturo=" + sefacturo.replace(/ /g, '-') + "&tipohardwareestado=" + tipohardwareestado.replace(/ /g, '-') +
+                   "&descripciontipohardwareestado=" + descripciontipohardwareestado.replace(/ /g, '-') + "&identificador=" + identificador.replace(/ /g, '-')
+                   + "&moneda=" + moneda.replace(/ /g, '-'), 'GoogleWindow', 'width=800, height=600');
+
+                   // window.open("/admin/orden/cambio/?ordenid=" + id + "&ordendetalle=" + seriedt.replace(/ /g, '-') +
+                   //"&usuario=" + usuario.replace(/ /g, '-') + "&celular=" + celular.replace(/ /g, '-') + "&ubicacion=" + ubicacion.replace(/ /g, '-') +
+                   //"&observacion=" + observacion.replace(/ /g, '-') + "&valor=" + preciovalor + "&igv=" + igv
+                   //+ "&total=" + total + "&cable=" + cableseg.replace(/ /g, '-') + "&mouse=" + mouse.replace(/ /g, '-') + "&maleta=" + maleta.replace(/ /g, '-')
+                   //+ "&accesorio=" + accesorio.replace(/ /g, '-') + "&grecepcion=" + grecepcion.replace(/ /g, '-') +
+                   //"&seriehw=" + seriehw + "&sefacturo=" + sefacturo.replace(/ /g, '-') + "&tipohardwareestado=" + tipohardwareestado.replace(/ /g, '-') +
+                   //"&descripciontipohardwareestado=" + descripciontipohardwareestado.replace(/ /g, '-') + "&identificador=" + identificador.replace(/ /g, '-')
+                   //+ "&moneda=" + moneda.replace(/ /g, '-'), 'GoogleWindow', 'width=800, height=600')
+                    
+                }
+            })
+
+        } else if (estadoorden == 0) {
+            var iddetalleorden = $("#iddetalleorden").val();
+            Swal.fire({
+                title: 'Salida de equipo',
+                text: "Desea dar salida al equipo!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+
+
+                    Swal.fire({
+                        title: 'Bien',
+                        text: "Se esta generando la guia de recepcion",
+                        icon: 'success'
+                    })
+
+
+                }
+            })
+        }
+        
+    })
+</script>
+<script>
+
+    $("#formulario").on('submit', (e)=>{
+        e.preventDefault();
+        let estadovalor = $("#estadovalor").val();
+        let estadoorden = $("#estadodetalleorden").val();
+
+        let iddetalleorden = $("#iddetalleorden").val();
+
+        console.log(estadovalor)
+
+           let action = $("#formulario").attr('action');
+
+        //alert(action)
+           if (estadovalor == 1) {
+
+
+               $.ajax(
+              {
+                  url: action,
+                  data: $("#formulario").serialize(),
+                  type: "POST",
+                  success: function (msg) {
+                      if (msg) {
+                          window.location.href = '@Url.Content("~/admin/detalleordens")'
+                      }
+                  },
+                  error: function (result) {
+                      alert("ERROR " + result.status + ' ' + result.statusText);
+                  }
+              });
+           }
+        if (estadovalor == 2) {
+
+
+               $.ajax(
+              {
+                  url:action,
+                  data: $("#formulario").serialize(),
+                  type: "POST",
+                  success: function (msg) {
+                      if(msg){
+                          window.location.href ='@Url.Content("~/admin/detalleordens")'
+                      }
+                  },
+                  error: function (result) {
+                      alert("ERROR " + result.status + ' ' + result.statusText);
+                  }
+              });
+           }
+
+        if (estadovalor == 0) {
+            $.ajax({
+                type: 'POST',
+                url: action,
+                data: $("#formulario").serialize(),
+                beforeSend: function () {
+                    // setting a timeout
+                    console.log('cargando')
+                    $("#cargando").modal();
+                },
+                success: function (msg) {
+                    if (msg) {
+                        $.ajax(
+                        {
+                            url: action,
+                            data: $("#formulario").serialize(),
+                            type: "POST",
+                            success: function (msg) {
+                                if (msg) {
+                                    location.reload();
+                                   // window.location.href = '@Url.Content("~/admin/detalleordens")'
+                                }
+                            },
+                            error: function (result) {
+                                alert("ERROR " + result.status + ' ' + result.statusText);
+                            }
+                        });
+
+                    }
+                },
+                error: function (xhr) { // if error occured
+                    alert("ERROR " + result.status + ' ' + result.statusText);
+                
+                },
+                complete: function (msgs) {
+                    console.log('se completo')
+                    $('#cargando').modal('hide')
+                },
+                dataType: 'html'
+            });
+
+        }
+
+    })
+</script>
+
+
+
+
+<script>
+    $("#enviarGuiaRemision").on('click', function () {
+       // e.preventDefault();
+        console.log('click a')
+        let id = $("#iddetalleorden").val();
+        let nmbrand = $("#nmbrand").val();
+        let nmmodel = $("#nmmodel").val();
+        let seriehw = $("#iddetalleorden").val();
+        let correo = $("#correoaenviar").val();
+        let ubicacion = $("#ubicacion").val();
+
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '@Url.Content("~/admin/orden/enviarCorreoGuiaRecepcion")' + "?correo=" + correo + "&id=" + id + "&marca=" + nmbrand + "&modelo=" + nmmodel + "&serie=" + seriehw + "&ubicacion=" + ubicacion,
+            data: $("#formulario").serialize(),
+            beforeSend: function () {
+                // setting a timeout
+                console.log('cargando')
+                $("#cargando").modal();
+            },
+            success: function (msg) {
+                console.log(msg)
+
+                var msgarray = JSON.parse(msg);
+                console.log(msgarray.response)
+                if (msgarray.response) {
+                    $('#modalCorreoGuiadeRecepcion').modal('hide')
+                   // redi = 'window.location.href = "' + r.href + '"'
+                    Swal.fire({
+                        title: 'Bien',
+                        text: msgarray.message,
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'ok'
+                    }).then((result) => {
+                        if (result.value) {
+
+                            window.location.href = msgarray.href;
+
+
+                        }
+                    })
+                    
+                } else {
+                    Swal.fire({
+                        title: 'Ups',
+                        text: msgarray.message,
+                        icon: 'warning'
+                    })
+                }
+            },
+            error: function (xhr) { // if error occured
+                alert("ERROR " + result.status + ' ' + result.statusText);
+
+            },
+            complete: function (msga) {
+                console.log('se completo')
+                $('#cargando').modal('hide')
+            },
+            dataType: 'html'
+        });
+    })
+</script>

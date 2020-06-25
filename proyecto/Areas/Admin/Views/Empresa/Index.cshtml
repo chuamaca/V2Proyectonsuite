@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div>
+    <a href="~/admin/empresa/crud" class="btn  btn-success no-border btn-sm">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Agregar
+    </a>
+
+    <a href="~/admin/empresa/index" class="btn  btn-success no-border btn-sm">
+        <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+        Listar
+    </a>
+</div>
+<br />
+
+
+
+
+<div id="list" class="well"></div>
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#list").anexGrid({
+            columnas: [
+                { leyenda: 'EMPRESA', columna: 'nmempresa', ordenable: true },
+                { leyenda: 'RUC', columna: 'rucempresa', style: 'width:10px;', ordenable: true },
+                { leyenda: 'ESTADO', columna: 'estadoempresa', style: 'width:140px;', ordenable: true },
+                { style: 'width:10px;' },
+                { style: 'width:10px;' }
+            ],
+
+            modelo: [
+                {
+                    propiedad: 'nmempresa', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/empresa/crud/")' + obj.idempresa,
+                            contenido: valor
+                        });
+                    }
+                },
+
+                { propiedad: 'rucempresa'},
+
+
+
+                 {
+
+                     propiedad: 'estadoempresa', formato: function (tr, obj, valor) {
+                         return valor == 1 ? "<span>Activo</span>"  : "<span class='label label-danger'>No Activo</span>";
+                         //return anexGrid_link({ href:  })
+                     }
+
+                 },
+
+
+
+
+                // BOTONES
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/empresa/crud/")' + obj.idempresa,
+                            contenido: '<i class="ace-icon fa	fa-eye  bigger-120 blue"></i>Ver',
+                            class: 'btn btn-light  btn-xs'
+                        });
+                    },
+                },
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/empresa/eliminar/")' + obj.idempresa,
+                            contenido: '<i class="ace-icon fa fa-trash-o bigger-120 red"></i>',
+                            class: 'btn btn-light  btn-xs',
+                            attr: [
+                                'onclick="return confirm(\'¿Esta seguro de eliminar este registro?\')"'
+                            ]
+                        });
+                    },
+                }
+            ],
+
+            url: '@Url.Content("~/admin/empresa/CargarEmpresa")',
+            paginable: true,
+            limite: [20, 60, 100],
+            columna: 'id',
+            columna_orden: 'DESC'
+        });
+    })
+</script>

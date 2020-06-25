@@ -1,0 +1,823 @@
+﻿@model IEnumerable<Model.Liquidacion>
+
+@{
+    ViewBag.Title = "Index";
+}
+@*PARA HACER BUSQUEDA*@
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+<!-- page specific plugin styles -->
+<!-- text fonts -->
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/fonts.googleapis.com.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce//css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/ace-skins.min.css" />
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/ace-rtl.min.css" />
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+
+
+
+<script src="~/Areas/Admin/assetsAce/js/ace-extra.min.js"></script>
+
+<script>
+    function myFunction() {
+        // Declare variables
+        //var input, filter, table, tr, td, i, txtValue;
+        //input = document.getElementById("myInput");
+        //filter = input.value.toUpperCase();
+        //table = document.getElementById("tablaLiquidacion");
+        //tr = table.getElementsByTagName("tr");
+
+        //// Loop through all table rows, and hide those who don't match the search query
+        //for (i = 0; i < tr.length; i++) {
+        //    td = tr[i].getElementsByTagName("td")[0];
+
+
+
+        //    if (td) {
+        //        txtValue = td.textContent || td.innerText;
+        //        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        //            tr[i].style.display = "";
+        //        } else {
+        //            tr[i].style.display = "none";
+        //        }
+        //    }
+        //}
+    }
+</script>
+
+
+
+<div>
+    <a href="~/admin/Liquidacions/Create" class="btn  btn-success no-border btn-sm">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Agregar
+    </a>
+
+    <a href="#" class="btn  btn-success no-border btn-sm">
+        <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+        Listar
+    </a>
+</div>
+<br />
+
+@*<p>
+
+        @Html.ActionLink("Agregar", "Create")
+    </p>*@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="col-sm-6">
+            <div class="form-group col-sm-6">
+                <select class="form-control" id="selectFilter">
+                    <option value="0-proceso">Proceso</option>
+                    <option value="5-referencia">referencia</option>
+                    <option value="37-serie">serie</option>
+                    <option value="27-orden servicio">orden servicio</option>
+                    <option value="29-rq">RQ</option>
+                    <option value="17-grupo economico">Grupo economico</option>
+                    <option value="14-empresa">empresa</option>
+                    <option value="23-cliente">cliente</option>
+                    <option value="62-IdentificadorGeneral">IdentificadorGeneral</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <input type="text" class="column_filter form-control inputFil" data-column="0" id="col0_filter" placeholder="proceso">
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group col-sm-6">
+                <select class="form-control" id="selectFilter2">
+                    <option value="0-proceso">Proceso</option>
+                    <option value="5-referencia">referencia</option>
+                    <option value="37-serie">serie</option>
+                    <option value="27-orden servicio">orden servicio</option>
+                    <option value="29-rq">RQ</option>
+                    <option value="17-grupo economico">Grupo economico</option>
+                    <option value="14-empresa">empresa</option>
+                    <option value="23-cliente">cliente</option>
+                    <option value="62-IdentificadorGeneral">IdentificadorGeneral</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <input type="text" class="column_filter form-control inputFil2" data-column="0" id="col0_filter" placeholder="proceso">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12">
+
+
+        
+
+
+            <div id="yo" class="page">
+
+
+                <div class="table-responsive">
+                    <table class="table  " id="tablaLiquidacion" >
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.procesos)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.estado)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.contratointerno)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.refacturable)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.mes)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.referencia)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.doc)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.numerodocumento)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.c_fact)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaemision)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechainicio)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechafin)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.credito)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.rucempresa)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.empresa)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.contratomarco)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ubicacion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.grupoeconomico)
+                                </th>
+
+                            
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.red)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.responsable)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.telefonoresponsable)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.sucursal)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ruccliente)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.cliente)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.usuariofinal)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.telefonousuario)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.tipousuario)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ordenservicio)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaordenservicio)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.rqcliente)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.contrato)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.guiaremision)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.tipo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.tipohardwareestado)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.descripciontipohardwareestado)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.codigoequipo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.tipoequipo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.serie)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.marca)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.modelo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.parnumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.bateria)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.cargador)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.procesador)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.velocidad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ram)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.disco)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.licencia)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.nombreequipo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.usuariooficce)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.cableseguridad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.mouse)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.maletin)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.softwareadicional)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.accesorios)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.observaciones)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.moneda)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.valor)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.igv)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.total)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.sefacturo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Identificador)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IdentificadorGeneral)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UsuarioEjecuto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaejecucion)
+                                </th>
+
+
+
+
+
+
+                                <th class="no-exportar">acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+        {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.procesos)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.estado)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.contratointerno)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.refacturable)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.mes)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.referencia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.doc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.numerodocumento)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.c_fact)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaemision)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechainicio)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechafin)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.credito)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.rucempresa)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.empresa)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.contratomarco)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ubicacion)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.grupoeconomico)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.red)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.responsable)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.telefonoresponsable)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.sucursal)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ruccliente)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.cliente)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.usuariofinal)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.telefonousuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tipousuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ordenservicio)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaordenservicio)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.rqcliente)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.contrato)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.guiaremision)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tipo)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tipohardwareestado)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.descripciontipohardwareestado)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.codigoequipo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tipoequipo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.serie)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.marca)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.modelo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.parnumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.bateria)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.cargador)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.procesador)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.velocidad)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ram)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.disco)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.licencia)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nombreequipo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.usuariooficce)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.cableseguridad)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.mouse)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.maletin)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.softwareadicional)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.accesorios)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.observaciones)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.moneda)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.valor)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.igv)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.total)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.sefacturo)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Identificador)
+                                    </td>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IdentificadorGeneral)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UsuarioEjecuto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaejecucion)
+                                    </td>
+
+
+
+
+
+
+                                 
+
+                                    <td>
+
+                                        <a href='@Url.Action( "Edit", new { id = item.idLiquidaciones })'><i class="ace-icon fa fa-pencil-square-o   bigger-120 blue"></i></a>
+                                        <a href='@Url.Action( "Details", new { id = item.idLiquidaciones })'><i class="ace-icon fa fa-eye bigger-120 red"></i></a>
+                                        <a href='@Url.Action( "Delete", new { id = item.idLiquidaciones })'><i class="ace-icon fa fa-trash-o bigger-120 red"></i></a>
+                                    </td>
+                                </tr>
+        }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+        <script src="assets/js/jquery-2.1.4.min.js"></script>
+
+        <!-- <![endif]-->
+        <!--[if IE]>
+        <script src="assets/js/jquery-1.11.3.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="assets/js/bootstrap.min.js"></script>
+
+        <!-- page specific plugin scripts -->
+        <script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.bootstrap.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/dataTables.buttons.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/buttons.flash.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/buttons.html5.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/buttons.print.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/buttons.colVis.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/dataTables.select.min.js"></script>
+
+        <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.jss"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+
+
+        <!-- ace scripts -->
+        <script src="~/Areas/Admin/assetsAce/js/ace-elements.min.js"></script>
+        <script src="~/Areas/Admin/assetsAce/js/ace.min.js"></script>
+
+        <!-- inline scripts related to this page -->
+<script>
+    $("#selectFilter").change(function () {
+        let valor =$(this).val().split("-")
+        console.log(valor)
+        $(".inputFil").val("")
+        $(".inputFil").attr("data-column", valor[0])
+        $(".inputFil").attr("id", "col" + valor[0] + "_filter")
+        $(".inputFil").attr("placeholder", valor[1])
+
+//           <input id="inputFil" type="text" class="column_filter form-control" data-column="1" id="col1_filter" placeholder="proceso">
+    })
+
+    $("#selectFilter2").change(function () {
+        let valor = $(this).val().split("-")
+        console.log(valor)
+        $(".inputFil2").val("")
+        $(".inputFil2").attr("data-column", valor[0])
+        $(".inputFil2").attr("id", "col" + valor[0] + "_filter")
+        $(".inputFil2").attr("placeholder", valor[1])
+
+    })
+</script>
+
+
+        <script type="text/javascript">
+            jQuery(function ($) {            
+
+                function filterGlobal() {
+                    $('#tablaLiquidacion').DataTable().search(
+                        $('#global_filter').val()
+                       /* $('#global_regex').prop('checked'), 
+                        $('#global_smart').prop('checked')*/
+                    ).draw();
+                }
+
+                function filterColumn(i) {
+                    $('#tablaLiquidacion').DataTable().column(i).search(
+                        $('#col' + i + '_filter').val()
+                        /*$('#col'+i+'_regex').prop('checked'), 
+                        $('#col'+i+'_smart').prop('checked')*/
+                    ).draw();
+                }
+
+                $(document).ready(function () {
+                    $('#tablaLiquidacion').DataTable({
+                       
+                       // "deferRender": true,
+                        // "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        //"iDisplayLength":10,
+                        //"processing": true,
+                        // 'select': true,
+                        // "serverSide": true,
+                        //  "pageLength": 10,
+                        //"lengthMenu": [10, 25, 50, 75, 100],
+                        "responsive": true,
+                       // "orderCellsTop": true,
+                        //"fixedHeader": true,
+                       // "retrieve": true,
+                       // "processing": true,
+                        "language": {
+
+                            "sProcessing": "Procesando...",
+                            "sLengthMenu": "Mostrar _MENU_ registros",
+                            "sZeroRecords": "No se encontraron resultados",
+                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                            "sInfoFiltered": "(filtrado de un total de MAX registros)",
+                            "sInfoPostFix": "",
+                            "sSearch": "Buscar:",
+                            "sUrl": "",
+                            "sInfoThousands": ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst": "Primero",
+                                "sLast": "Último",
+                                "sNext": "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+
+                        },
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'copy',
+                                text: 'Copiar',
+                                className: 'btn btn-sm btn-primary',
+                                exportOptions: {
+                                    columns: ":not(.no-exportar)" //exportar toda columna que no tenga la clase no-exportar
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                                text: 'csv',
+                                className: 'btn btn-sm btn-primary',
+                                exportOptions: {
+                                    columns: ":not(.no-exportar)" //exportar toda columna que no tenga la clase no-exportar
+                                }
+                            },
+                            {
+                                extend: 'excel',
+                                text: 'excel',
+                                className: 'btn btn-sm btn-primary',
+                                exportOptions: {
+                                    columns: ":not(.no-exportar)" //exportar toda columna que no tenga la clase no-exportar
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                text: 'pdf',
+                                //title: 'Data export',
+                                className: 'btn btn-sm btn-primary',
+                                exportOptions: {
+                                    columns: ":not(.no-exportar)" //exportar toda columna que no tenga la clase no-exportar
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                text: 'print',
+                                className: 'btn btn-sm btn-primary',
+                                exportOptions: {
+                                    columns: ":not(.no-exportar)" //exportar toda columna que no tenga la clase no-exportar
+                                }
+                            }
+                        ]
+                    });
+
+                    /* $('input.global_filter').on( 'keyup click', function () {
+                       filterGlobal();
+                   } );*/
+
+                    $('input.column_filter').on('keyup click', function () {
+                        // filterColumn( $(this).parents('tr').attr('data-column') );
+                        filterColumn($(this).attr('data-column'))
+                    });
+
+
+                });
+
+
+                //initiate dataTables plugin
+               /* var myTable =                    
+				$('#tablaLiquidacion thead tr').clone(true).appendTo('#tablaLiquidacion thead');
+                $('#tablaLiquidacion thead tr:eq(1) th').each(function (i) {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+                    $('input', this).on('keyup change', function () {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                .column(i)
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+
+                var table = $('#tablaLiquidacion').DataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    columnDefs: [{
+                        targets: 53,
+                        searchable: false
+                    }],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            exportOptions: {
+                                //0 -53
+                                columns: [0, ':visible']
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            exportOptions: {
+                                columns: [0, ':visible']
+                            }
+                        },
+                         {
+                             extend: 'excel',
+                             exportOptions: {
+                                 columns: [0, ':visible']
+                             }
+                         },
+                        {
+                            extend: 'pdf',
+                            exportOptions: {
+                                columns: [0, ':visible']
+                            }
+                        },
+                        'colvis'
+                    ]
+                    //dom: 'Bfrtip',
+                    //buttons: [
+                    //    'copy', 'csv', 'excel', 'pdf', 'print'
+                    //],
+                    //exportOptions: {
+                    //    columns: [0, 1, 2, 5,]
+                    //},
+
+                });
+                */
+            })
+        </script>

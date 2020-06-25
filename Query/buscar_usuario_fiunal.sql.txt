@@ -1,0 +1,6 @@
+ALTER PROC SP_RPT_BUSCARUSUARIOFINAL 16
+(
+@idordenuser int
+)
+as select equipousuarioorden, telefonousuarioorden from orden where idorden=@idordenuser
+go

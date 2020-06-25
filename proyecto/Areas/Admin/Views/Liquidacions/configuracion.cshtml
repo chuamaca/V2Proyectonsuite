@@ -1,0 +1,298 @@
+﻿
+@{
+    Model.Usuario usuario = new Model.Usuario().ObtenerPerfil(Helper.SessionHelper.GetUser());
+    ViewBag.Title = "configuracion";
+
+}
+
+
+<div class="row">
+
+   
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-xs-11 label label-lg label-info arrowed-in arrowed-right">
+                            <b>MENSUAL [INICIO DE MES]</b>
+                        </div>
+                    </div>
+
+                    <div>
+                        <ul class="list-unstyled spaced">
+                            <li>
+
+
+                                <i class="ace-icon fa fa-caret-right blue"></i>PRE LIQUIDACION MENSUAL
+
+
+
+                                <a href="~/admin/liquidacions/configuracion" id="generarliquidacion" data-ajax="true" class="btn btn-info btn-xs">
+                                    <i class="ace-icon fa fa-folder-open-o bigger-110"> </i> GENERAR
+                                </a>
+
+
+                            </li>
+
+                            <li>
+                                
+
+                                <i class="ace-icon fa fa-caret-right blue"></i>LIQUIDACION FACTURACION MENSUAL
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="text" name="name" id="identificadorG" class="form-control form-control-sm" placeholder="Codigo" value="" required />
+                                    </div>
+                                    <a href="~/admin/liquidacions/configuracion" id="generarliquidacionfacturacion" data-ajax="true" class="btn btn-info btn-xs">
+                                        <i class="ace-icon fa fa-folder-open-o bigger-110"> </i> GENERAR
+                                    </a>
+                                </div>
+                               
+                                <br />
+
+                                
+
+
+                            </li>
+
+                            <li>
+
+
+                                <i class="ace-icon fa fa-caret-right blue"></i>Actas de Conformidad
+
+
+
+                                <a href="·n" id="" data-ajax="true" class="btn btn-info btn-xs">
+                                    <i class="ace-icon fa fa-folder-open-o bigger-110"> </i> GENERAR Listado
+                                </a>
+
+
+                            </li>
+
+
+
+
+
+
+                            <li class="divider"></li>
+
+
+                        </ul>
+                    </div>
+                </div><!-- /.col -->
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-xs-11 label label-lg label-success arrowed-in arrowed-right">
+                            <b>Mantenimiento</b>
+                        </div>
+                    </div>
+
+                    <div>
+                      
+                           
+
+                            <ul class="list-unstyled spaced">
+                                @*<li>
+
+
+                                    <i class="ace-icon fa fa-caret-right blue"></i>LIQUIDACION MENSUAL
+
+
+
+                                    <a href="~/admin/liquidacions/configuracion" id="generarliquidacion" data-ajax="true" class="btn btn-info btn-xs">
+                                        <i class="ace-icon fa fa-folder-open-o bigger-110"> </i> GENERAR
+                                    </a>
+
+
+                                </li>
+
+
+
+
+
+                                <li class="divider"></li>*@
+
+                            </ul>
+                    </div>
+                </div><!-- /.col -->
+
+            }
+
+   
+</div>
+<div id="cargando" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body" style="display:flex; justify-content:center;">
+                <img style="width:120px; margin :5px auto;" src="https://d203ovh1oelywy.cloudfront.net/images/icons/load.gif" />
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    $("#generarliquidacion").on("click", (e) => {
+        
+        e.preventDefault();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Content("~/admin/liquidacions/GenerarLiquidacion?valor=abc")',
+            data: '',
+            beforeSend: function () {
+                // setting a timeout
+                console.log('cargando')
+                $("#cargando").modal();
+            },
+            success: function (msg) {
+                console.log(msg);
+                let arraymsg = JSON.parse(msg);
+                console.log(arraymsg)
+                if (arraymsg.response) {
+                  
+                    // redi = 'window.location.href = "' + r.href + '"'
+                    Swal.fire({
+                        title: 'Bien',
+                        text: arraymsg.message,
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'ok'
+                    }).then((result) => {
+                        if (result.value) {
+
+                            window.location.href = arraymsg.href;
+
+
+                        }
+                    })
+
+                } else {
+                    Swal.fire({
+                        title: 'Ups',
+                        text: arraymsg.message,
+                        icon: 'warning'
+                    })
+                }
+
+            },
+            error: function (xhr) { // if error occured
+                alert("ERROR " + result.status + ' ' + result.statusText);
+
+            },
+            complete: function (msgre) {
+                console.log('se completo')
+                $('#cargando').modal('hide')
+            },
+            dataType: 'html'
+        });
+    })
+       </script>
+
+<script>
+        $("#generarliquidacionfacturacion").on("click", (e) => {
+            e.preventDefault();
+            let identificadorG = $("#identificadorG").val()
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/admin/liquidacionfacturacions/GenerarLiquidacionFacturacion?valoridentificadorG=")' + identificadorG,
+                data: '',
+                beforeSend: function () {
+                    // setting a timeout
+                    console.log('cargando')
+                    $("#cargando").modal();
+                },
+                success: function (msg) {
+                    console.log(msg);
+                    let arraymsg = JSON.parse(msg);
+                    console.log(arraymsg)
+                    if (arraymsg.response) {
+                  
+                        // redi = 'window.location.href = "' + r.href + '"'
+                        Swal.fire({
+                            title: 'Bien',
+                            text: arraymsg.message,
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'ok'
+                        }).then((result) => {
+                            if (result.value) {
+
+                                window.location.href = arraymsg.href;
+                            }
+                        })
+
+                    } else {
+                        Swal.fire({
+                            title: 'Ups',
+                            text: arraymsg.message,
+                            icon: 'warning'
+                        })
+                    }
+
+                },
+                error: function (xhr) { // if error occured
+                    alert("ERROR " + result.status + ' ' + result.statusText);
+
+                },
+                complete: function (msgre) {
+                    console.log('se completo')
+                    $('#cargando').modal('hide')
+                },
+                dataType: 'html'
+            });
+
+       
+        })
+   
+</script>
+
+
+
+
+@*$.ajax(
+    {
+        url: '@Url.Content("~/admin/liquidacions/GenerarLiquidacion?valor=abc")',
+        data: '',
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (msg) {
+            console.log(msg)
+            //if (!msg.response) {
+            //    title = "Ups"
+            //    icon = "warning"
+            //} else {
+            //    title = "Exito"
+            //    icon = "success"
+            //}
+
+            //Swal.fire({
+            //    title: title,
+            //    text: msg.message,
+            //    icon: icon,
+            //    // +' showCancelButton: true,'
+            //    confirmButtonColor: "#3085d6",
+            //    //   +' cancelButtonColor: "#d33",'
+            //    confirmButtonText: "Ok"
+            //}).then((result) => {
+            //    if (result.value) {
+
+            //    }
+            //})
+
+        },
+        error: function (result) {
+            alert("ERROR " + result.status + ' ' + result.statusText);
+        }
+    });*@

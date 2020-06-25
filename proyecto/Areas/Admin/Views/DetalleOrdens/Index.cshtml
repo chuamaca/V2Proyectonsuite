@@ -1,0 +1,281 @@
+﻿@model IEnumerable<Model.DetalleOrden>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*PARA HACER BUSQUEDA*@
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+<!-- page specific plugin styles -->
+<!-- text fonts -->
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/fonts.googleapis.com.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce//css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/ace-skins.min.css" />
+<link rel="stylesheet" href="~/Areas/Admin/assetsAce/css/ace-rtl.min.css" />
+
+<script src="~/Areas/Admin/assetsAce/js/ace-extra.min.js"></script>
+
+
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+
+
+
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+<ol class="breadcrumb">
+    <li><a href="~/admin/Orden/">Orden</a></li>
+
+    <li class="active"> Detalle de Orden </li>
+
+
+</ol>
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
+
+
+<div class="row">
+    <!--<div class="col-md-6">
+        <span class="input-icon">
+            <input type="text" id="myInput" class="nav-search-input" onkeyup="myFunction()" placeholder="Buscar Proceso">
+            <i class="ace-icon fa fa-search nav-search-icon"></i>
+        </span>
+
+
+    </div>-->
+    <div class="col-sm-12 col-md-12">
+        <div class="well">
+            <div id="yo" class="page">
+                <table class="table mGrid" id="myTable">
+                    <thead>
+                        <tr>
+                            <th style="max-width:1px;">
+                                @Html.DisplayNameFor(model => model.Orden.codigoorden)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Hardware.seriehw)
+                            </th>
+                            <th style="max-width:10px;">
+                                @Html.DisplayNameFor(model => model.seriedt)
+                            </th>
+                            <th style="max-width:15px;">
+                                @Html.DisplayNameFor(model => model.usuariof)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.valor)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IGV)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.total)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.obscambio)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.estadodetalleorden)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Orden.codigoorden)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Hardware.seriehw)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.seriedt)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.usuariof)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.valor)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IGV)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.total)
+                                </td>
+                                <td style="max-width:90px;">
+                                    @Html.DisplayFor(modelItem => item.obscambio)
+                                </td>
+                                <td>
+                                    @if (item.estadodetalleorden == 1)
+                                    {
+                                        <span> PRODUCCION</span>
+                                    }
+                                    else if (item.estadodetalleorden == 0)
+                                    {
+                                        <span class="label label-danger"> CERRADO</span>
+                                    }
+
+
+                                    else if (item.estadodetalleorden == 2)
+                                    {
+                                        <span class="label label-danger"> CAMBIO</span>
+                                    }
+
+                                    @*@Html.DisplayFor(modelItem => item.estadodetalleorden)*@
+                                </td>
+                                <td>
+                                    <a href='@Url.Action( "Edit", new { id = item.iddetalleorden })'><i class="ace-icon fa fa-pencil-square-o   bigger-120 blue"></i></a> |
+                                    <a href='@Url.Action( "Delete", new { id = item.iddetalleorden })'><i class="ace-icon fa fa-trash-o bigger-120 red"></i></a> |
+
+                                    @if (item.estadodetalleorden == 0 || item.estadodetalleorden==2)
+	                                {
+		                                <a  identificador = @item.iddetalleorden href=""  id="ver_guia_recepcion"><i class="ace-icon fa	fa-eye  bigger-120 blue"></i> GR</a>
+	                                }
+                                    
+                                    @*  @Html.ActionLink("Actualizar", "Edit", new { id = item.iddetalleorden }) |*@
+                                    @*@Html.ActionLink("Detalle", "Details", new { id = item.iddetalleorden }) |*@
+                                    @* @Html.ActionLink("Eliminar", "Delete", new { id = item.iddetalleorden })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<div id="cargando" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body" style="display:flex; justify-content:center;">
+                <img style="width:120px; margin :5px auto;" src="https://d203ovh1oelywy.cloudfront.net/images/icons/load.gif" />
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="assets/js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+<!--[if IE]>
+<script src="assets/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="assets/js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/jquery.dataTables.bootstrap.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/dataTables.buttons.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.flash.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.html5.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.print.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/buttons.colVis.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/dataTables.select.min.js"></script>
+
+<!-- ace scripts -->
+<script src="~/Areas/Admin/assetsAce/js/ace-elements.min.js"></script>
+<script src="~/Areas/Admin/assetsAce/js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+			jQuery(function($) {
+				//initiate dataTables plugin
+				var myTable =
+				$('#myTable').DataTable( {
+					bAutoWidth: false,
+					
+					"aaSorting": []
+			    } );
+
+			})
+</script>
+<script>
+    $("#ver_guia_recepcion").on('click', (e) => {
+        e.preventDefault();
+        let idd = $("#ver_guia_recepcion").attr('identificador');
+        console.log(idd)
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Content("~/admin/orden/ver_guia_recepcion/")' + idd,
+            data: $("#formulario").serialize(),
+            beforeSend: function () {
+                // setting a timeout
+                console.log('cargando')
+                $("#cargando").modal();
+            },
+            success: function (msg) {
+                
+                let arraymsg = JSON.parse(msg);
+                console.log(arraymsg)
+                if (arraymsg.response) {
+                    window.open(arraymsg.href);
+                //    window.location.href = arraymsg.href
+                } else {
+                    Swal.fire({
+                        title: 'Ups',
+                        text: arraymsg.message,
+                        icon: 'warning'
+                    })
+                }
+               
+            },
+            error: function (xhr) { // if error occured
+                alert("ERROR " + result.status + ' ' + result.statusText);
+
+            },
+            complete: function (msgre) {
+                console.log('se completo')
+                $('#cargando').modal('hide')
+            },
+            dataType: 'html'
+        });
+
+    })
+</script>

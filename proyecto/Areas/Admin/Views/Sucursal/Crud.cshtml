@@ -1,0 +1,129 @@
+﻿@model Sucursal
+@{
+    ViewBag.Title = "Crud";
+
+    List<Empresa> misempresas = ViewBag.miempresa;
+}
+
+<div>
+    <a href="~/admin/sucursal/crud" class="btn btn-app btn-info btn-xs">
+        <i class="ace-icon fa fa-folder-open-o bigger-110"></i>
+    </a>
+
+    <a href="~/admin/sucursal/index" class="btn btn-app btn-success btn-xs">
+        <i class="ace-icon fa fa-exchange bigger-110"></i>
+    </a>
+</div>
+
+@using (Html.BeginForm("guardar", "sucursal", FormMethod.Post))
+{
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="well">
+                <div id="yo" class="page">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Información de Sucursales</a></li>
+                        @*<li role="presentation" class="active">  </li>*@
+
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" style="scrollbar-base-color:ButtonHighlight aliceblue;" id="info">
+
+                            <div class="form-horizontal">
+                                <p></p>
+                                <fieldset>
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="textNombres">Empresa</label>
+                                        <div class="col-md-3">
+                                            <select class="input-12" name="empresa_id">
+                                                @foreach (var c in misempresas)
+                                                {
+                                                    <option @(Model.empresa_id == (c.idempresa) ? "selected" : "") value="@c.idempresa">@c.nmempresa</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        @Html.LabelFor(x => x.codigosuc, new { @class = "col-sm-2 control-label pull-left" })
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.codigosuc, new { @class = "input-12", placeholder = "Codigo Suc" })
+                                            @Html.ValidationMessageFor(x => x.codigosuc, null, new { @class = "label label-danger" })
+                                        </div>
+
+                               
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        @Html.HiddenFor(x => x.idsucursal)
+                                        @Html.LabelFor(x => x.nmsucursal, new { @class = "col-sm-2 control-label pull-left" })
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.nmsucursal, new { @class = "input-12", placeholder = "Surcursal" })
+                                            @Html.ValidationMessageFor(x => x.nmsucursal, null, new { @class = "label label-danger" })
+                                        </div>
+
+                                        @Html.LabelFor(x => x.telefonosuc, new { @class = "col-sm-1 control-label pull-left" })
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.telefonosuc, new { @class = "input-12", placeholder = "RUC" })
+                                            @Html.ValidationMessageFor(x => x.telefonosuc, null, new { @class = "label label-danger" })
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <select name="estadosuc" class="input-12">
+                                                <option @(Model.estadosuc == 0 ? "selected" : "") value="0"> No Activo </option>
+                                                <option @(Model.estadosuc == 1 ? "selected" : "") value="1"> Activo </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.direccionsuc, new { @class = "col-sm-2 control-label pull-left" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(x => x.direccionsuc, new { @class = "input-12", placeholder = "Dirección" })
+                                            @Html.ValidationMessageFor(x => x.direccionsuc, null, new { @class = "label label-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.otroscu, new { @class = "col-sm-2 control-label pull-left" })
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(x => x.otroscu, new { @class = "input-12", placeholder = "Correo" })
+                                            @Html.ValidationMessageFor(x => x.otroscu, null, new { @class = "label label-danger" })
+                                        </div>
+
+                                        @Html.LabelFor(x => x.telefonosuc, new { @class = "col-sm-1 control-label pull-left" })
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.telefonosuc, new { @class = "input-12", placeholder = "Telefono" })
+                                            @Html.ValidationMessageFor(x => x.telefonosuc, null, new { @class = "label label-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => x.observacionsuc, new { @class = "col-sm-2 control-label pull-left" })
+                                        <div class="col-md-6">
+                                            @Html.TextAreaFor(x => x.observacionsuc, new { @class = "input-12", placeholder = "" })
+                                            @Html.ValidationMessageFor(x => x.observacionsuc, null, new { @class = "label label-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right well well-sm">
+                    <button type="submit" data-ajax="true" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

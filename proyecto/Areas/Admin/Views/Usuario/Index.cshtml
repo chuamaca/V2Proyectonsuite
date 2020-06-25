@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <a href="~/admin/usuario/crud" class="btn  btn-success no-border btn-sm">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Agregar
+    </a>
+
+    <a href="~/admin/usuario/index" class="btn  btn-success no-border btn-sm">
+        <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+        Listar
+    </a>
+</div>
+<br />
+<div id="usuario" class="well">
+
+   
+
+    <div id="list"></div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#list").anexGrid({
+            columnas: [
+                { leyenda: 'Nombre', columna: 'nombre', ordenable: true },
+                { leyenda: 'Correo', columna: 'correo', style: 'width:10px;', ordenable: true },
+                 { leyenda: 'Cuenta', columna: 'cuenta', style: 'width:10px;', ordenable: true },
+
+               { leyenda: 'Empresa', columna: 'razonsocial', style: 'width:200px;', ordenable: true },
+                { leyenda: 'Estado', columna: 'activo', style: 'width:140px;', ordenable: true },
+                { style: 'width:10px;' },
+                { style: 'width:10px;' }
+            ],
+
+            modelo: [
+                {
+                    propiedad: 'nombre', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/usuario/crud/")' + obj.idusuario,
+                            contenido: valor
+                        });
+                    }
+                },
+
+                { propiedad: 'correo'},
+                {
+                    propiedad: 'cuenta', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/usuario/crud/")' + obj.idusuario,
+                            contenido: valor
+                        });
+                    }
+                },
+                 { propiedad: 'razonsocial' },
+
+                 {
+
+                     propiedad: 'activo', formato: function (tr, obj, valor) {
+                         return valor == true ? "Activo"  : "No Activo";
+                         //return anexGrid_link({ href:  })
+                     }
+
+                 },
+
+
+
+
+                // BOTONES
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/usuario/crud/")' + obj.idusuario,
+                            contenido: '<i class="ace-icon fa	fa-eye  bigger-120 blue"></i>Ver',
+                            class: 'btn btn-light btn-xs'
+                        });
+                    },
+                },
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/usuario/eliminar/")' + obj.idusuario,
+                            contenido: '<i class="ace-icon fa fa-trash-o bigger-120 red"></i>',
+                            class: 'btn btn-light btn-xs',
+                            attr: [
+                                'onclick="return confirm(\'¿Esta seguro de eliminar este registro?\')"'
+                            ]
+                        });
+                    },
+                }
+            ],
+
+            url: '@Url.Content("~/admin/usuario/cargarUsuario")',
+            paginable: true,
+            limite: [20, 60, 100],
+            columna: 'id',
+            columna_orden: 'DESC'
+        });
+    })
+</script>

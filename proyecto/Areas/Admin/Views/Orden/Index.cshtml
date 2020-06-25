@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+
+    <h3 class="header blue lighter smaller">
+        <i class="ace-icon fa fa-bars smaller-90"></i>
+        Procesos De Alquiler 
+
+
+
+        <a href="~/admin/orden/crud" class="btn  btn-success no-border btn-sm">
+         
+            Agregar Nuevo Alquiler
+            <span class="fa fa-laptop" aria-hidden="true"></span>
+        </a>
+
+        @*<a href="~/admin/orden/index" class="btn  btn-success no-border btn-sm">
+            <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+            Listar
+        </a>*@
+    </h3>
+
+
+</div>
+
+
+            <div id="listorden" class="widget-box ">
+
+
+            </div>
+
+    
+  
+
+
+<div id="cargando" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body" style="display:flex; justify-content:center;">
+                <img style="width:120px; margin :5px auto;" src="https://d203ovh1oelywy.cloudfront.net/images/icons/load.gif" />
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+      var anexGrid=  $("#listorden").anexGrid({
+            columnas: [
+                 { leyenda: 'ORDEN', columna: 'codigoorden', ordenable: true },
+                { leyenda: 'EMPRESA', columna: 'empresaorden', ordenable: true },
+                { leyenda: 'CLIENTE', columna: 'clienteorden', style: 'width:10px;', ordenable: true },
+                { leyenda: 'OS', columna: 'ordenservicio', style: 'width:140px;', ordenable: true },
+                { leyenda: 'PRODUCCION', columna: 'produccion', style: 'width:140px;', ordenable: true },
+                  { leyenda: 'ESTADO', columna: 'estadoorden', style: 'width:140px;', ordenable: true },
+                { style: 'width:10px;' },
+                { style: 'width:10px;' }
+            ],
+
+            modelo: [
+
+                {
+                    propiedad: 'codigoorden', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/orden/crud/")' + obj.idorden,
+                            contenido: valor
+                        });
+                    }
+                },
+
+                {
+                    propiedad: 'empresaorden', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/orden/crud/")' + obj.idorden,
+                            contenido: valor
+                        });
+                    }
+                },
+
+
+
+
+               { propiedad: 'clienteorden' },
+
+
+                { propiedad: 'ordenservicio' },
+                {
+                    propiedad: 'produccion'},
+
+                   {
+                       propiedad: 'estadoorden', formato: function (tr, obj, valor) {
+                           return obj.estadoorden == 0 ? '<span class="label label-danger">CERRADO</span>' : '<span class="text-success">PRODUCCION</span>';
+                       }
+                   },
+
+
+
+
+                // BOTONES
+
+                @*{
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_dropdown({
+                            contenido: 'Orden',
+                            class: 'btn btn-primary btn-xs ',
+                            target: '_blank',
+                            id: 'editar-' + obj.idorden,
+                            data: [
+                             //   { href: '@Url.Content("~/admin/orden/formatos?idorden=")' + obj.idorden, contenido: 'Ver' },
+                                {class:"btn", href: '@Url.Content("~/admin/orden/generarFose?idorden=")' + obj.idorden, contenido: 'Genera' },
+                                { href: '@Url.Content("~/admin/orden/Fose?idorden=")'+ obj.idorden, contenido: 'Ver' },
+                                { valor:"enviar", href: '#', contenido: 'Enviar' }
+
+                            ]
+                        });
+                    },
+                },*@
+           
+
+                //{
+                //    formato: function (tr, obj, celda) {
+                //        var fila_id = tr.data('fila');
+                //        return '<button value="' + fila_id + '" type="button" class="btn btn-primary btn-fose">Orden</button>';
+
+                //    },
+                //},
+               
+                { formato: function(tr, obj, celda){
+                    var fila_id = tr.data('fila');
+                    return '<button value="' + fila_id + '" type="button" class="btn btn-light  btn-xs ver_fose">FOSE</button>';
+                }}
+               ,
+                {
+                    formato: function (tr, obj, celda) {
+                        var fila_id = tr.data('fila');
+                        return '<button value="' + fila_id + '" type="button" class="btn btn-light  btn-xs ver_guia_re">G. RE.</button>';
+                    }
+                }
+               ,
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/orden/ViewDetailorden/")' + obj.idorden,
+                            contenido: '<i class="ace-icon fa	fa-eye  bigger-120 blue"></i>Ver',
+                            class: 'btn btn-light  btn-xs'
+                        });
+                    },
+                },
+
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/orden/eliminar/")' + obj.idorden,
+                            
+                            contenido: '<i class="ace-icon fa fa-trash-o bigger-120 red"></i>',
+                            class: 'btn btn-light  btn-xs',
+                            attr: [
+                                'onclick="return confirm(\'¿Esta seguro de eliminar este registro?\')"'
+                            ]
+                        });
+                    },
+                }
+            ],
+
+            url: '@Url.Content("~/admin/orden/CargarOrden")',
+            paginable: true,
+            limite: [20, 60, 100],
+            columna: 'idorden',
+            columna_orden: 'DESC'
+        });
+
+        anexGrid.tabla().on('click', '.ver_fose', function () {
+            var obj = anexGrid.obtener($(this).val());
+            console.log(obj)
+       //  window.location.href = "./Fose?idorden=" + obj.idorden
+       //  window.location.href = "http://192.168.1.240/renting/reports/fose/fose" + obj.idorden + ".pdf"
+         $.ajax({
+             type: 'GET',
+             url: '@Url.Content("~/admin/orden/ver_fose/")' + obj.idorden,
+             data: $("#formulario").serialize(),
+             beforeSend: function () {
+                 // setting a timeout
+                 console.log('cargando')
+                 $("#cargando").modal();
+             },
+             success: function (msg) {
+                 console.log(msg)
+                 let arraymsg = JSON.parse(msg);
+                 console.log(arraymsg)
+                 if (arraymsg.response) {
+                     window.open(arraymsg.href);
+                     //    window.location.href = arraymsg.href
+                 } else {
+                     Swal.fire({
+                         title: 'Ups',
+                         text: arraymsg.message,
+                         icon: 'warning'
+                     })
+                 }
+
+             },
+             error: function (xhr) { // if error occured
+                 alert("ERROR " + result.status + ' ' + result.statusText);
+
+             },
+             complete: function (msgre) {
+                 console.log('se completo')
+                 $('#cargando').modal('hide')
+             },
+             dataType: 'html'
+         });
+        })
+
+
+        anexGrid.tabla().on('click', '.ver_guia_re', function () {
+            var obj = anexGrid.obtener($(this).val());
+            //  window.location.href = "./Fose?idorden=" + obj.idorden
+            //  window.location.href = "http://192.168.1.240/renting/reports/fose/fose" + obj.idorden + ".pdf"
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/admin/orden/ver_guia_re/")' + obj.idorden,
+                data: $("#formulario").serialize(),
+                beforeSend: function () {
+                    // setting a timeout
+                    console.log('cargando')
+                    $("#cargando").modal();
+                },
+                success: function (msg) {
+
+                    let arraymsg = JSON.parse(msg);
+                    console.log(arraymsg)
+                    if (arraymsg.response) {
+                        window.open(arraymsg.href);
+                        //    window.location.href = arraymsg.href
+                    } else {
+                        Swal.fire({
+                            title: 'Ups',
+                            text: arraymsg.message,
+                            icon: 'warning'
+                        })
+                    }
+
+                },
+                error: function (xhr) { // if error occured
+                    alert("ERROR " + result.status + ' ' + result.statusText);
+
+                },
+                complete: function (msgre) {
+                    console.log('se completo')
+                    $('#cargando').modal('hide')
+                },
+                dataType: 'html'
+            });
+        })
+
+    })
+
+</script>

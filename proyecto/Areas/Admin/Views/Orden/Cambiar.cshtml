@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Cambiar";
+}
+<script>
+   $(document).ready(function () {
+       $("#inventarioo").load('@Url.Content("~/admin/orden/inventario/?Orden_id=2")');
+    })
+    function CargarInventarioo()
+    {
+
+        $("#inventarioo").load('@Url.Content("~/admin/orden/inventario/?Orden_id=2")');
+    }
+
+</script>
+<h2>Cambiar</h2>
+
+<h1>Registre su equipo cambio</h1>
+
+
+<div id="inventarioo">
+
+</div>
+

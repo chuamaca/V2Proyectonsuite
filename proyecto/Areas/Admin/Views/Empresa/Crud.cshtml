@@ -1,0 +1,141 @@
+﻿@model Empresa
+@{
+    ViewBag.Title = "Crud";
+    
+}
+
+
+<div>
+    <a href="~/admin/empresa/crud" class="btn btn-app btn-info btn-xs">
+        <i class="ace-icon fa fa-folder-open-o bigger-110"></i>
+    </a>
+
+    <a href="~/admin/empresa/index" class="btn btn-app btn-success btn-xs">
+        <i class="ace-icon fa fa-exchange bigger-110"></i>
+    </a>
+</div>
+
+@using (Html.BeginForm("Guardar", "Empresa", FormMethod.Post))
+{
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="well">
+                <div id="yo" class="page">
+
+
+            
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Información de Empresas</a></li>
+                            @*<li role="presentation" class="active">  </li>*@
+
+                        </ul>
+
+     
+
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" style="scrollbar-base-color:ButtonHighlight aliceblue;" id="info">
+
+                                <div class="form-horizontal">
+                                    <p></p>
+                                    <fieldset>
+                                        <div class="form-group">
+
+                                          @Html.HiddenFor(x => x.idempresa)
+                                            @Html.LabelFor(x => x.nmempresa, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.nmempresa, new { @class = "input-12", placeholder = "Razon Social" })
+                                                @Html.ValidationMessageFor(x => x.nmempresa, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                            @Html.LabelFor(x => x.rucempresa, new { @class = "col-sm-1 control-label pull-left" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.rucempresa, new { @class = "input-12", placeholder = "RUC" })
+                                                @Html.ValidationMessageFor(x => x.rucempresa, null, new { @class = "label label-danger" })
+                                            </div>
+
+                              
+                                            <div class="col-md-2">
+                                                <select name="estadoempresa" class="input-12">
+                                                    <option @(Model.estadoempresa == 0 ? "selected" : "") value="0"> No Activo </option>
+                                                    <option @(Model.estadoempresa == 1 ? "selected" : "") value="1"> Activo </option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(x => x.dirempresa, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.dirempresa, new { @class = "input-12", placeholder = "Dirección" })
+                                                @Html.ValidationMessageFor(x => x.dirempresa, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <input type="file" name="Logo" value="" />
+                                                @Html.ValidationMessageFor(x => x.logoempresa, null, new { @class = "label label-danger" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.correoempresa, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(x => x.correoempresa, new { @class = "input-12", placeholder = "Correo" })
+                                                @Html.ValidationMessageFor(x => x.correoempresa, null, new { @class = "label label-danger" })
+                                            </div>
+
+                                            @Html.LabelFor(x => x.telefonoempresa, new { @class = "col-sm-1 control-label pull-left" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(x => x.telefonoempresa, new { @class = "input-12", placeholder = "Telefono" })
+                                                @Html.ValidationMessageFor(x => x.telefonoempresa, null, new { @class = "label label-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                           
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.obsempresa, new { @class = "col-sm-2 control-label pull-left" })
+                                            <div class="col-md-6">
+                                                @Html.TextAreaFor(x => x.obsempresa, new { @class = "input-12" ,placeholder = "Ingrese su nombre" })
+                                                @Html.ValidationMessageFor(x => x.obsempresa, null, new { @class = "label label-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                        
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="text-right well well-sm">
+                        <button type="submit" data-ajax="true" class="btn btn-primary">Guardar</button>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+}
+
+
